@@ -15,7 +15,53 @@ gameInfoDiv.style.visibility="hidden"
 
 const containerElem = document.getElementById("container")
 
+///DATA MAP GAME
 
+class Location {
+    constructor(filename, name, x, y, toDo) {
+        this.file=filename;
+        this.name=name;
+        this.x=x;
+        this.y=y;
+        this.toDo=toDo;
+    }
+
+    loadPic() {
+
+        var picDiv=document.querySelector("#pic-element");
+        picDiv.style.visibility="visible";
+
+
+        var picMap=document.querySelector("#pic-map")
+        picMap.src=this.file
+
+        setTimeout(function() {
+            picDiv.style.visibility="hidden";
+        },5000)
+
+    }
+
+    isTheGoodOne(x,y) {
+        var distPercent= Math.sqrt((this.x-x)*(this.x-x)+(this.y-y)*(this.y-y));
+        var distMeters = distPercent*3310/0.243;
+        return distMeters;
+    }
+
+}
+
+
+const loc1= new Location("./Ressources/Plan Paris/tobefound/pyramides.jpg", "Pyramide du Louvre", 0.462, 0.492, "")
+const loc2= new Location("./Ressources/Plan Paris/tobefound/mouff2.jpg", "Rue Mouffetard", 0.528, 0.744, "")
+
+const loc3= new Location("./Ressources/Plan Paris/tobefound/philha.jpg", "Philharmonie de Paris", 0.733, 0.135, "")
+
+var locations=[loc1, loc2, loc3];
+
+var indexMap = 0;
+var locPushed=[];
+
+
+///DATA PICTURES
 
 class Picture {
     constructor(filenames,expected, toDo) {
@@ -36,7 +82,6 @@ class Picture {
     isTheGoodOne(index) {
         return this.expected === index ? true : false 
     }
-
 
 }
 
@@ -142,6 +187,16 @@ function updateScore(type,result,t) {
         score1 -= 200;
     }
     else if (type==="music" && result===-1) {// cas time elapsed
+        score1 -= 200;
+    }
+
+    if (type==="pics" && result===1) { //cas ok
+        score1 += 1000 + 500 + t/3;
+    }
+    else if (type==="pics" && result===0) { //cas entrée nok
+        score1 -= 200;
+    }
+    else if (type==="pics" && result===-1) {// cas time elapsed
         score1 -= 200;
     }
 
