@@ -22,7 +22,7 @@ body {
         right: 2vw;
         top: 2vh;
         background-color:rgba(255, 255, 255, 0.801);
-        z-index: 1;
+        z-index: 3;
         padding: 10px;
         visibility: visible;
     }
@@ -31,9 +31,11 @@ body {
     display: block;
     font-size: 5vh;
     color: black;
-    z-index: 1;
+    z-index: 3;
     font-weight:bold;
 }
+
+/* GENERAL / GAME INFOS */
 
 #gameInfo-div {
         position: absolute;
@@ -43,7 +45,7 @@ body {
         margin: 0 auto;
         top: 20vh;
         background-color:rgba(255, 255, 255, 0.801);
-        z-index: 1;
+        z-index: 2;
         padding: 10px;
         visibility: visible;
     }
@@ -52,7 +54,7 @@ body {
       display: block;
       font-size: 5vh;
       color: black;
-      z-index: 1;
+      z-index: 2;
       font-weight:bold;
   }
 
@@ -61,7 +63,7 @@ body {
     display: block;
     font-size: 5vh;
     color: black;
-    z-index: 1;
+    z-index: 2;
     font-weight:normal;
 }
 
@@ -70,7 +72,7 @@ body {
   display: block;
   font-size: 5vh;
   color: black;
-  z-index: 1;
+  z-index: 2;
   font-weight:bold;
 }
 
@@ -84,12 +86,43 @@ body {
 	        animation: heartbeat 1.5s ease-in-out 2 both;
 }
 
+/*GENERAL - RECAP */
+
+#recap {
+  position: absolute;
+  width:fit-content;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  top: 20vh;
+  background-color:rgb(255, 255, 255);
+  border: solid black 4px;
+  z-index: 4;
+  padding: 50px;
+  visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#recap span {
+  text-align: center;
+  display: block;
+  font-size: 3vh;
+  color: black;
+  z-index: 4;
+  font-weight:normal;
+}
+
+
+/* GENERAL - TITLES */
+
 #titles {
         position: fixed;
         width: fit-content;
         top: 2vh;
         left: 2vw;
-        z-index: 1;
+        z-index: 3;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
@@ -231,7 +264,7 @@ h4 {
   top:25vh;
   margin: auto;
   background-color:rgba(255, 255, 255, 0.801);
-  z-index: 1;
+  z-index: 2;
   padding: 10px;
 }
 
@@ -335,7 +368,7 @@ h4 {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1;
+    z-index: 2;
 }
 
 #music-input {
@@ -379,7 +412,7 @@ h4 {
 }
 
 #start-button {
-    z-index: 1;
+    z-index: 3;
 }
 
 /* input ok */

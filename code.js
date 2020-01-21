@@ -43,9 +43,6 @@ nextPart("firstPart");
 
 function nextPart(type) {
     type!=="firstPart" ? indexGamePlan++ : 1 
-    console.log("nextPart")
-    console.log(indexGamePlan)
-    console.log(gamePlan[indexGamePlan])
     gamePlan[indexGamePlan]();
 }
 
@@ -144,6 +141,10 @@ function nextPic(type) {
 
     timer=0;
 
+    var score = 0;
+    var bonus = 0;
+    var malus = 0;
+
     //chargement des photos
 
     var intervalID = setInterval(() => {
@@ -152,8 +153,8 @@ function nextPic(type) {
         if (timer>1500) {
             //définir une animation NOK
             clearInterval(intervalID);
-            updateScore("pics", -1, timer);
-            nextPart();
+            malus=updateScore("pics", -1, timer)[2];
+            recap("pics", -1, 0, [0, 0, malus], "")
         }
     }, 10);
 
@@ -189,31 +190,36 @@ function nextPic(type) {
 
     for (let i=0; i<picsElem.length;i++) {
         picsElem[i].onclick = function(event) {
-        checkResult(Number(event.target.getAttribute("id")[3]))
+            var picClicked = Number(event.target.getAttribute("id")[3])-1; 
+            checkResult(picClicked);
         }
     }
 
     function checkResult(indexClicked) {
         if (pictures[indexPics].isTheGoodOne(indexClicked)) {//pic ok
 
-            updateScore("pics", 1, timer)
+            var finalTime= timer
+
+            var arr=updateScore("pics", 1, timer)
+            score=arr[0];
+            bonus=arr[1];
 
             if (picsShown.length < nbPics ) {//pic ok + next pic
                 clearInterval(intervalID);
                 intervalID=0;
-                nextPart(); 
+                recap("pics", 1, finalTime, [bonus, score, malus], pictures[indexPics].solutions[indexClicked])
             }
             else { //pic ok + next game
                 clearInterval(intervalID);
                 intervalID=0;
-                nextPart();
+                recap("pics", 1, finalTime, [bonus, score, malus], pictures[indexPics].solutions[indexClicked])
             }
         }
         else { //wrong selection
             updateScore("pics", 0, timer)
             clearInterval(intervalID);
             intervalID=0;
-            nextPart();
+            recap("pics", 0, 0, [0, 0, malus], pictures[indexPics].solutions[indexClicked])
         }
     }
 }
@@ -246,6 +252,9 @@ function loadPicGame() {
 function nextTitle(type) {
 
     timer=0;
+    var score = 0;
+    var bonus = 0;
+    var malus = 0;
 
     var intervalID = setInterval(() => {
         timer++
@@ -253,8 +262,8 @@ function nextTitle(type) {
         if (timer>2000) {
             inputAudio.classList.add("shake-horizontal")
             clearInterval(intervalID);
-            updateScore("music", -1, timer)
-            nextPart();
+            malus += updateScore("music", -1, timer)
+            recap("music", -1, 0, [0, 0, malus], audios[indexAudios].name)
         }
     }, 10);
 
@@ -281,7 +290,7 @@ function nextTitle(type) {
 
     //actu des infos
     titlesDiv.querySelector("h1").innerText="Audio "+ audioPlayed.length + "/" + nbAudios.toString();
-    gameInfo2.innerHTML=audios[indexAudios].name;
+    gameInfo2.innerHTML=audios[indexAudios].toDo;
     gameInfo2.classList.remove("pulsate-bck");
     gameInfo2.classList.add("pulsate-bck");
 
@@ -301,7 +310,11 @@ function nextTitle(type) {
 
         if (audios[indexAudios].isTheGoodOne(inputAudio.value)) {//entrée ok !
 
-            updateScore("music", 1, timer)
+            var finalTime= timer
+
+            var arr=updateScore("music", 1, timer)
+            score=arr[0];
+            bonus=arr[1];
 
             if (audioPlayed.length < nbAudios) {
 
@@ -311,29 +324,34 @@ function nextTitle(type) {
 
                 clearInterval(intervalID);
                 intervalID=0;
-                nextPart();
+
+                recap("music", 1, finalTime, [score, bonus, malus], audios[indexAudios].name)
+
+                //nextPart();
 
             }
 
-            else {
+            else { //Next audio
                 clearInterval(intervalID);
                 intervalID=0;
-                nextPart();
+                recap("music", 1, finalTime, [score, bonus, malus], audios[indexAudios].name)
             }
         }
         else {//entrée nok !
+
+            
 
             //volonté de skipper ?
             if (inputAudio.value === "pass") {
                 clearInterval(intervalID);
                 intervalID=0;
                 inputAudio.value="";
-                updateScore("music", -1, timer)
-                nextPart();
+                malus += updateScore("music", -1, timer)[2]
+                recap("music", 0, finalTime, [0, 0, malus], audios[indexAudios].name)
             }
             else { //mauvaise entrée
                 //enlever des points
-                updateScore("music", 0, timer)
+                malus += updateScore("music", 0, timer)[2]
                 inputAudio.classList.add("shake-horizontal")
                 //setTimeout(inputAudio.classList.remove("shake-horizontal"),1500)
             }

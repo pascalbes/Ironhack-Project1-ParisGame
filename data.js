@@ -64,10 +64,11 @@ var locPushed=[];
 ///DATA PICTURES
 
 class Picture {
-    constructor(filenames,expected, toDo) {
+    constructor(filenames,expected, toDo, solutions) {
         this.files=filenames;
         this.expected=expected;
         this.toDo=toDo;
+        this.solutions=solutions
     }
 
     loadPics() {
@@ -80,7 +81,7 @@ class Picture {
     }
 
     isTheGoodOne(index) {
-        return this.expected === index ? true : false 
+        return this.expected === index+1 ? true : false 
     }
 
 }
@@ -102,9 +103,10 @@ var pictures=[pic1,pic2,pic3,pic4,pic5]
 
 
 class Audio {
-    constructor(filename, expected, name) {
+    constructor(filename, expected, toDo, name) {
       this.file=filename;
       this.expected=expected;
+      this.toDo = toDo;
       this.name=name;
     }
 
@@ -115,6 +117,12 @@ class Audio {
 
     isTheGoodOne(txt) {
         return this.expected.includes(txt.toLowerCase()) ? true : false 
+    }
+
+    stopMusic() {
+        let audioElem=document.getElementById("audio");
+        console.log("yes")
+        audioElem.pause();
     }
 }
 
@@ -193,31 +201,111 @@ function countdownTimer(t,duration) {
     return tSt[0] +tSt[1]+":" + tSt[2] +tSt[3]
 }
 
-//FONCTION SCORE calcul et actualise le score
+//FONCTION SCORE calcul et actualise le score et retourne le score, le bonus et le malus
 function updateScore(type,result,t) {
 
     var score1=Number(scoreElem.textContent);
+    var score=0;
+    var bonus=0;
+    var malus=0;
 
     if (type==="music" && result===1) { //cas ok
-        score1 += 1000 + 500 + t/3;
+        bonus = Math.floor(500 + t/3);
+        score = 1000;
     }
     else if (type==="music" && result===0) { //cas entrée nok
-        score1 -= 200;
+        malus = 200;
     }
     else if (type==="music" && result===-1) {// cas time elapsed
-        score1 -= 200;
+        malus = 200;
     }
 
     if (type==="pics" && result===1) { //cas ok
-        score1 += 1000 + 500 + t/3;
+        bonus = Math.floor(500 + t/3);
+        score = 1000;
     }
     else if (type==="pics" && result===0) { //cas entrée nok
-        score1 -= 200;
+        malus = 200;
     }
     else if (type==="pics" && result===-1) {// cas time elapsed
-        score1 -= 200;
+        malus = 200;
     }
+
+    score1 = score1 + score + bonus - malus; 
 
     scoreElem.textContent=Math.floor(score1.toString());
 
+    return [score, bonus, malus]
+}
+
+
+function recap(typeGame, typeResult, time, [score, bonus, malus], elemClicked) {
+
+    var recapDiv=document.querySelector("#recap");
+    recapDiv.style.visibility="visible";
+
+    var btnNext=document.querySelector("#next");
+
+    window.addEventListener("keydown", function(event) {
+        // Number 13 is the "Enter" key on the keyboard
+        if (event.keyCode === 13) {
+          // Cancel the default action, if needed
+          event.preventDefault();
+          console.log("kikou")
+          // Trigger the button element with a click
+          document.querySelector("#next").click();
+        }
+      });
+
+    if (typeGame==="music") {
+        audios[0].stopMusic();
+    }
+
+
+    btnNext.onclick = function() {
+        recapDiv.style.visibility="hidden";
+        nextPart();
+    }
+
+    if (typeResult===1) {
+        recapDiv.getElementsByTagName("span")[0].innerHTML="v"
+        recapDiv.getElementsByTagName("span")[2].innerHTML="Victory !"
+    }
+    else if (typeResult===0) {
+        recapDiv.getElementsByTagName("span")[0].innerHTML="x";
+
+        if (typeResult==="music") {
+            recapDiv.getElementsByTagName("span")[2].innerHTML="Audio passed"
+        }
+        else if (typeResult==="pics") {
+            recapDiv.getElementsByTagName("span")[2].innerHTML="Wrong selection"
+        }
+        
+    }
+    else if (typeResult===-1) {
+        recapDiv.getElementsByTagName("span")[0].innerHTML="x";
+        recapDiv.getElementsByTagName("span")[2].innerHTML="Time Elapsed"
+    }
+
+    //"Audio 2/3"
+    recapDiv.getElementsByTagName("span")[1].innerHTML=titlesDiv.querySelector("h1").innerText;
+
+    //Score
+    var totalScore = score+bonus-malus;
+    recapDiv.getElementsByTagName("span")[3].innerHTML="Total score: " + totalScore;
+    recapDiv.getElementsByTagName("span")[4].innerHTML="Score: " + score
+    recapDiv.getElementsByTagName("span")[5].innerHTML="Time bonus: " + bonus
+    recapDiv.getElementsByTagName("span")[6].innerHTML="Penalties: " + malus
+
+    //résultat
+    if (typeGame==="music") {
+        recapDiv.getElementsByTagName("span")[7].innerHTML="You listened to: " + elemClicked
+    }
+    else if (typeGame==="pics") {
+        recapDiv.getElementsByTagName("span")[7].innerHTML="You clicked on: " + elemClicked
+    }
+    else if (typeGame==="map") {
+        recapDiv.getElementsByTagName("span")[7].innerHTML="You had to look for: " + elemClicked
+    }
+    
 }
