@@ -37,7 +37,7 @@ class Location {
 
         setTimeout(function() {
             picDiv.style.visibility="hidden";
-        },5000)
+        },3000)
 
     }
 
@@ -139,14 +139,14 @@ const audio5 = new Audio("./Ressources/Music/Cut/ella-i-love.mp3", ["ella fitzge
 const audio6 = new Audio("./Ressources/Music/Cut/jayzkanye-niggaz.mp3", ["jay z", "kanye west", "niggaz in paris", "jayz", "jay-z"], "find one artist or the song", "Jay-z & Kanye West - Niggaz in Paris")
 const audio7 = new Audio("./Ressources/Music/Cut/midnight.mp3", ["midnight in paris", "woody allen", "sidney bechet", "si tu vois ma mere", "si tu vois ma mère"], "find the artist, the song or the movie", "Sidney Bechet - Si tu vois ma mère (Midnight in Paris soundtrack)")
 const audio8 = new Audio("./Ressources/Music/Cut/ntm-parissouslesbombes.mp3", ["ntm", "paris sous les bombes"], "find the group or the song", "NTM - Paris sous les bombes")
-const audio9 = new Audio("./Ressources/Music/Cut/paris-seveille.mp3", ["dutronc", "jacques dutronc", "paris s'eveille", "paris s'éveille"], "find the artist or the song", "Jacques Dutronc - Paris sous les bombes")
+const audio9 = new Audio("./Ressources/Music/Cut/paris-seveille.mp3", ["dutronc", "jacques dutronc", "paris s'eveille", "paris s'éveille"], "find the artist or the song", "Jacques Dutronc - Paris s'éveille")
 const audio10 = new Audio("./Ressources/Music/Cut/oh-ville-lumiere.mp3", ["parc des princes"], "what place are we ?", "Parc des Princes - Oh ville lumière")
 const audio11 = new Audio("./Ressources/Music/Cut/paris-austerlitz.mp3", ["gare d'austerlitz", "austerlitz"], "in which train station are we ?", "Gare d'Austerlitz")
 const audio12 = new Audio("./Ressources/Music/Cut/antoine-kombouare.mp3", ["madrid", "real", "real madrid"], "who is PSG opponent ?", "Real Madrid - 1993")
 const audio13 = new Audio("./Ressources/Music/Cut/bill-evans-april-in-paris.mp3",["bill evans", "april in paris"], "find the pianist or the song", "Bill Evans - April in Paris");
 const audio14 = new Audio("./Ressources/Music/Cut/ligne-4.mp3", ["barbes", "barbès", "barbes rochechouart", "barbès rochechouart", "barbès-rochechouart", "barbes-rochechouart"], "what is next metro station ?", "Barbes Rochechouart")
-const audio15 = new Audio("./Ressources/Music/Cut/midnight.mp3",["Midnight in Paris"], "what movie the scene is from ?", "Midnight in Paris - Ending Scene")
-const audio16 = new Audio("./Ressources/Music/Cut/roy-hargrove-quintet-strasbourg-st-denis.mp3", ["roy hargrove", "strasbourg st denis", "strasbourg-st-denis", "strasbourg st-denis"], "find the artist or the song");
+const audio15 = new Audio("./Ressources/Music/Cut/midnight-in-paris-rain-scene.mp3",["midnight in paris"], "what movie the scene is from ?", "Midnight in Paris - Ending Scene")
+const audio16 = new Audio("./Ressources/Music/Cut/roy-hargrove-quintet-strasbourg-st-denis.mp3", ["roy hargrove", "strasbourg st denis", "strasbourg-st-denis", "strasbourg st-denis"], "find the artist or the song", "Roy Hargrove - Strasbourg St-Denis");
 const audio17 = new Audio("./Ressources/Music/Cut/st-germain-lauxerrois.mp3", ["louvre", "place du louvre"], "we are on a place. which one ?", "Place du Louvre")
 const audio18 = new Audio("./Ressources/Music/Cut/warning-siren.mp3", ["12h", "midi", "12"], "what time is it ?", "12h");
 
@@ -209,26 +209,45 @@ function updateScore(type,result,t) {
     var bonus=0;
     var malus=0;
 
+    //CASE MUSIC
     if (type==="music" && result===1) { //cas ok
-        bonus = Math.floor(500 + t/3);
-        score = 1000;
+        score = 5000;
+        bonus = Math.floor(2000 - t);
     }
     else if (type==="music" && result===0) { //cas entrée nok
-        malus = 200;
+        malus = 500;
     }
     else if (type==="music" && result===-1) {// cas time elapsed
-        malus = 200;
+        malus = 1000;
     }
 
+    //CASE PICS
     if (type==="pics" && result===1) { //cas ok
-        bonus = Math.floor(500 + t/3);
-        score = 1000;
+        score = 5000;
+        bonus = Math.floor(2000 - t);
     }
     else if (type==="pics" && result===0) { //cas entrée nok
-        malus = 200;
+        malus = 500;
     }
     else if (type==="pics" && result===-1) {// cas time elapsed
-        malus = 200;
+        malus = 1000;
+    }
+
+    //CASE MAPS
+    if (type==="map" && result===-1) { //time elapsed
+        malus = 1000;
+    }
+    else if (type==="map" && result !== -1) {//result : distance
+        if (result<2000) {
+            score = Math.floor(5000 - result*5/2);
+        }
+        else {
+            score=0;
+        }
+        
+        if (result<1000) {
+            bonus = Math.floor(2000 - t);
+        }
     }
 
     score1 = score1 + score + bonus - malus; 
@@ -239,7 +258,16 @@ function updateScore(type,result,t) {
 }
 
 
+//FONCTION RECAP :affiche le recap de l'action réalisée sur un jeu
 function recap(typeGame, typeResult, time, [score, bonus, malus], elemClicked) {
+
+    console.log("recap", elemClicked)
+
+    if (typeGame==="music") {
+        audios[0].stopMusic();
+        var inputAudio=document.getElementById("music-input");
+        inputAudio.setAttribute("editable", false)
+    }
 
     var recapDiv=document.querySelector("#recap");
     recapDiv.style.visibility="visible";
@@ -248,18 +276,14 @@ function recap(typeGame, typeResult, time, [score, bonus, malus], elemClicked) {
 
     window.addEventListener("keydown", function(event) {
         // Number 13 is the "Enter" key on the keyboard
-        if (event.keyCode === 13) {
+        if (event.keyCode === 13 && recapDiv.style.visibility==="visible") {
           // Cancel the default action, if needed
           event.preventDefault();
           console.log("kikou")
           // Trigger the button element with a click
           document.querySelector("#next").click();
         }
-      });
-
-    if (typeGame==="music") {
-        audios[0].stopMusic();
-    }
+    });
 
 
     btnNext.onclick = function() {
@@ -267,45 +291,89 @@ function recap(typeGame, typeResult, time, [score, bonus, malus], elemClicked) {
         nextPart();
     }
 
-    if (typeResult===1) {
-        recapDiv.getElementsByTagName("span")[0].innerHTML="v"
-        recapDiv.getElementsByTagName("span")[2].innerHTML="Victory !"
-    }
-    else if (typeResult===0) {
-        recapDiv.getElementsByTagName("span")[0].innerHTML="x";
+    //affichage pr le map
+    if (typeGame==="map") {
 
-        if (typeResult==="music") {
-            recapDiv.getElementsByTagName("span")[2].innerHTML="Audio passed"
+
+        //map 2/4
+        recapDiv.getElementsByTagName("span")[1].innerHTML=titlesDiv.querySelector("h1").innerText;
+
+        //distance + comment
+        recapDiv.getElementsByTagName("span")[2].innerHTML="You are " + typeResult + " meters away"
+
+        if (typeResult===-1) {
+            recapDiv.getElementsByTagName("span")[3]="Time Elapsed"
         }
-        else if (typeResult==="pics") {
-            recapDiv.getElementsByTagName("span")[2].innerHTML="Wrong selection"
+        else if (typeResult < 100) {
+            recapDiv.getElementsByTagName("span")[3].innerHTML="Bravo !!"
+        }
+        else if (typeResult < 500) {
+            recapDiv.getElementsByTagName("span")[3].innerHTML="well done!"
+        }
+        else if (typeResult < 1000) {
+            recapDiv.getElementsByTagName("span")[3].innerHTML="not bad!"
+        }
+        else if (typeResult < 2000) {
+            recapDiv.getElementsByTagName("span")[3].innerHTML="making a \"small\" detour ?"
+        }
+        else if (typeResult < 5000) {
+            recapDiv.getElementsByTagName("span")[3].innerHTML="do not make any appointment there"
+        }
+        else {
+            recapDiv.getElementsByTagName("span")[3].innerHTML="at least you selected Paris right ? ;)"
         }
         
-    }
-    else if (typeResult===-1) {
-        recapDiv.getElementsByTagName("span")[0].innerHTML="x";
-        recapDiv.getElementsByTagName("span")[2].innerHTML="Time Elapsed"
-    }
+        //score
+        var totalScore = score+bonus-malus;
+        recapDiv.getElementsByTagName("span")[4].innerHTML="Total score: " + totalScore;
+        recapDiv.getElementsByTagName("span")[5].innerHTML="Score: " + score
+        recapDiv.getElementsByTagName("span")[6].innerHTML="Time bonus: " + bonus
+        recapDiv.getElementsByTagName("span")[7].innerHTML="Penalties: " + malus
 
-    //"Audio 2/3"
-    recapDiv.getElementsByTagName("span")[1].innerHTML=titlesDiv.querySelector("h1").innerText;
+        //affichage résultat
+        recapDiv.getElementsByTagName("span")[8].innerHTML="You had to look for: " + elemClicked
 
-    //Score
-    var totalScore = score+bonus-malus;
-    recapDiv.getElementsByTagName("span")[3].innerHTML="Total score: " + totalScore;
-    recapDiv.getElementsByTagName("span")[4].innerHTML="Score: " + score
-    recapDiv.getElementsByTagName("span")[5].innerHTML="Time bonus: " + bonus
-    recapDiv.getElementsByTagName("span")[6].innerHTML="Penalties: " + malus
 
-    //résultat
-    if (typeGame==="music") {
-        recapDiv.getElementsByTagName("span")[7].innerHTML="You listened to: " + elemClicked
     }
-    else if (typeGame==="pics") {
-        recapDiv.getElementsByTagName("span")[7].innerHTML="You clicked on: " + elemClicked
-    }
-    else if (typeGame==="map") {
-        recapDiv.getElementsByTagName("span")[7].innerHTML="You had to look for: " + elemClicked
+    else {
+        //pics et music
+        if (typeResult===1) {
+            recapDiv.getElementsByTagName("span")[0].innerHTML="v"
+            recapDiv.getElementsByTagName("span")[2].innerHTML="Victory !"
+        }
+        else if (typeResult===0) {
+            recapDiv.getElementsByTagName("span")[0].innerHTML="x";
+
+            if (typeResult==="music") {
+                recapDiv.getElementsByTagName("span")[2].innerHTML="Audio passed"
+            }
+            else if (typeResult==="pics") {
+                recapDiv.getElementsByTagName("span")[2].innerHTML="Wrong selection"
+            }
+            
+        }
+        else if (typeResult===-1) {
+            recapDiv.getElementsByTagName("span")[0].innerHTML="x";
+            recapDiv.getElementsByTagName("span")[2].innerHTML="Time Elapsed"
+        }
+
+        //"Audio 2/3"
+        recapDiv.getElementsByTagName("span")[1].innerHTML=titlesDiv.querySelector("h1").innerText;
+
+        //Score
+        var totalScore = score+bonus-malus;
+        recapDiv.getElementsByTagName("span")[3].innerHTML="Total score: " + totalScore;
+        recapDiv.getElementsByTagName("span")[4].innerHTML="Score: " + score
+        recapDiv.getElementsByTagName("span")[5].innerHTML="Time bonus: " + bonus
+        recapDiv.getElementsByTagName("span")[6].innerHTML="Penalties: " + malus
+
+        //résultat
+        if (typeGame==="music") {
+            recapDiv.getElementsByTagName("span")[7].innerHTML="You listened to: " + elemClicked
+        }
+        else if (typeGame==="pics") {
+            recapDiv.getElementsByTagName("span")[7].innerHTML="You clicked on: " + elemClicked
+        }
     }
     
 }

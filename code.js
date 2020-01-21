@@ -9,7 +9,9 @@ var nbPics = 3 //nombre d'images proposées
 var nbMaps = 3 //nombre de maps proposées
 
 
-//var gamePlan=[function() { gameIntro("Maps")},loadMapGame,function() { nextMap('first')},function() { nextMap()},function() { nextMap()}]
+var gamePlan=[function() { gameIntro("Maps")},loadMapGame,function() { nextMap('first')},function() { nextMap()},function() { nextMap()}]
+
+
 
 var gamePlan=[loadHomePage2, function() { gameIntro("Music")},loadMusicGame, function() { nextTitle('first') }];
 
@@ -107,17 +109,17 @@ function nextMap(type) {
     //lancement chrono / après la photo
     var intervalID = setInterval(() => {
         timer++
-        gameInfo1.innerHTML=countdownTimer(timer,3000);
-        if (timer>3000) {
+        gameInfo1.innerHTML=countdownTimer(timer,2000);
+        if (timer>2000) {
             clearInterval(intervalID);
             intervalID=0;
-            updateScore("map", -1, timer)
-            nextPart();
+            updateScore("map", -1, timer);
+            recap("map", 1000000, 0, [0, 0, 1000], locations[indexMap].name)
         }
     }, 10);
 
     //actu des infos
-    titlesDiv.querySelector("h1").innerText= "Location "+ locPushed.length + "/" + nbPics.toString();
+    titlesDiv.querySelector("h1").innerText= "Location "+ locPushed.length + "/" + nbMaps.toString();
     gameInfo2.innerHTML="find the location of the picture";
     gameInfo2.classList.remove("heartbeat");
     setTimeout(gameInfo2.classList.add("heartbeat"),200);
@@ -126,11 +128,16 @@ function nextMap(type) {
 
         var xPos=(event.x-event.srcElement.offsetLeft+window.scrollX)/event.srcElement.width;
         var yPos=(event.y-event.srcElement.offsetTop+window.scrollY)/event.srcElement.height;
-        alert(locations[indexMap].isTheGoodOne(xPos,yPos));
 
+        var distance = Math.floor(locations[indexMap].isTheGoodOne(xPos,yPos));
+        var finalTime=timer,
+
+        arr=updateScore("map",distance,finalTime)
         clearInterval(intervalID);
         intervalID=0;
-        nextPart();
+
+        recap("map", distance, finalTime, [arr[0], arr[1], 0], locations[indexMap].name)
+
     }
 
 }
@@ -149,8 +156,8 @@ function nextPic(type) {
 
     var intervalID = setInterval(() => {
         timer++
-        gameInfo1.innerHTML=countdownTimer(timer,1500);
-        if (timer>1500) {
+        gameInfo1.innerHTML=countdownTimer(timer,2000);
+        if (timer>2000) {
             //définir une animation NOK
             clearInterval(intervalID);
             malus=updateScore("pics", -1, timer)[2];
@@ -207,12 +214,12 @@ function nextPic(type) {
             if (picsShown.length < nbPics ) {//pic ok + next pic
                 clearInterval(intervalID);
                 intervalID=0;
-                recap("pics", 1, finalTime, [bonus, score, malus], pictures[indexPics].solutions[indexClicked])
+                recap("pics", 1, finalTime, [score, bonus, malus], pictures[indexPics].solutions[indexClicked])
             }
             else { //pic ok + next game
                 clearInterval(intervalID);
                 intervalID=0;
-                recap("pics", 1, finalTime, [bonus, score, malus], pictures[indexPics].solutions[indexClicked])
+                recap("pics", 1, finalTime, [score, bonus, malus], pictures[indexPics].solutions[indexClicked])
             }
         }
         else { //wrong selection
@@ -251,6 +258,8 @@ function loadPicGame() {
 //MUSIC GAME
 function nextTitle(type) {
 
+    console.log("next title-----------------")
+
     timer=0;
     var score = 0;
     var bonus = 0;
@@ -284,8 +293,6 @@ function nextTitle(type) {
     }
     
     //lancement music
-    console.log(indexAudios);
-    console.log(audios[indexAudios]);
     audios[indexAudios].startMusic();
 
     //actu des infos
@@ -296,6 +303,7 @@ function nextTitle(type) {
 
     //gestion de l'input
     var inputAudio=document.getElementById("music-input");
+    inputAudio.setAttribute("editable", true)
 
     inputAudio.oninput = function() {
         inputAudio.style.width=((inputAudio.value.length + 1) * 70) + 'px';
@@ -308,9 +316,11 @@ function nextTitle(type) {
     //gestion des entrées
     inputAudio.onchange = function() {
 
+        console.log("input value",inputAudio.value)
+
         if (audios[indexAudios].isTheGoodOne(inputAudio.value)) {//entrée ok !
 
-            var finalTime= timer
+            var finalTime= timer;
 
             var arr=updateScore("music", 1, timer)
             score=arr[0];
@@ -327,8 +337,6 @@ function nextTitle(type) {
 
                 recap("music", 1, finalTime, [score, bonus, malus], audios[indexAudios].name)
 
-                //nextPart();
-
             }
 
             else { //Next audio
@@ -339,7 +347,7 @@ function nextTitle(type) {
         }
         else {//entrée nok !
 
-            
+            console.log("entrée nok")
 
             //volonté de skipper ?
             if (inputAudio.value === "pass") {
@@ -443,7 +451,7 @@ function loadHomePage2() {
           
         containerElem.innerHTML = response.data 
 
-
+        
         //Bouton page d'intro. Au clic, jeu1 : suppression du contenu du html et ajout du contenu de la page suivante
         var btnIntro=document.getElementById("intro-button") ;
         
@@ -457,48 +465,49 @@ function loadHomePage2() {
 }
 
 
-// HOME PAGE
-function loadHomePage() {
+// // HOME PAGE
+// function loadHomePage() {
 
-    //chargement du html
-    axios
-      .get('./home.html')
-      .then(response => {
+//     //chargement du html
+//     axios
+//       .get('./home.html')
+//       .then(response => {
           
-        containerElem.innerHTML = response.data 
+//         containerElem.innerHTML = response.data 
 
-          //Texte d'introduction
-        var txts = ["I heard you wanted to leave.","Before you do","Show me you loved me"]
-        var ids=["intro1","intro2","intro3"]
+//           //Texte d'introduction
+//         var txts = ["I heard you wanted to leave.","Before you do","Show me you loved me"]
+//         var ids=["intro1","intro2","intro3"]
 
-        var i = 0;
-        var speed = 100; 
+//         var i = 0;
+//         var speed = 100; 
 
-        typeWriter(txts[0],ids[0])
-        setTimeout(typeWriter,txts[0].length*speed+1000,txts[1],ids[1])
-        setTimeout(typeWriter,txts[0].length*speed+txts[1].length*speed+1500,txts[2],ids[2])
+//         typeWriter(txts[0],ids[0])
+//         setTimeout(typeWriter,txts[0].length*speed+1000,txts[1],ids[1])
+//         setTimeout(typeWriter,txts[0].length*speed+txts[1].length*speed+1500,txts[2],ids[2])
 
-        function typeWriter(txt,id) {
+//         function typeWriter(txt,id) {
 
-            if (i < txt.length) {
-                document.getElementById(id).innerHTML += txt.charAt(i);
-                i++;
-                setTimeout(typeWriter, speed, txt,id);
-            }
-            else {
-                i=0;
-            }
+//             if (i < txt.length) {
+//                 document.getElementById(id).innerHTML += txt.charAt(i);
+//                 i++;
+//                 setTimeout(typeWriter, speed, txt,id);
+//             }
+//             else {
+//                 i=0;
+//             }
 
-        }
+//         }
 
-        //Bouton page d'intro. Au clic, jeu1 : suppression du contenu du html et ajout du contenu de la page suivante
-        var btnIntro=document.getElementById("intro-button") ;
+//         //Bouton page d'intro. Au clic, jeu1 : suppression du contenu du html et ajout du contenu de la page suivante
+//         var btnIntro=document.getElementById("intro-button") ;
         
-        btnIntro.onclick = function() {
-            containerElem.innerHTML = "";
-            nextPart();
-        }
+//         btnIntro.onclick = function() {
+//             console.log("lol")
+//             containerElem.innerHTML = "";
+//             nextPart();
+//         }
 
-    }); 
+//     }); 
 
-}
+// }
