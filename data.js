@@ -85,13 +85,19 @@ class Picture {
 
 }
 
-const pic1 = new Picture(["./Ressources/2- Pics/i11.jpg", "./Ressources/2- Pics/i12.jpg", "./Ressources/2- Pics/i13.jpg", "./Ressources/2- Pics/i14.jpg"],3,"find the parisian park")
+const pic1 = new Picture(["./Ressources/2- Pics/i11.jpg", "./Ressources/2- Pics/i12.jpg", "./Ressources/2- Pics/i13.jpg", "./Ressources/2- Pics/i14.jpg"],3,"find the parisian park", ["Hyde Park", "Central Park", "Bois de Vincennes", "Villa Borghese"])
 
-const pic2 = new Picture(["./Ressources/2- Pics/i21.jpg", "./Ressources/2- Pics/i22.jpg", "./Ressources/2- Pics/i23.jpg", "./Ressources/2- Pics/i24.jpg"],2,"find the parisian stadium")
+const pic2 = new Picture(["./Ressources/2- Pics/i21.jpg", "./Ressources/2- Pics/i22.jpg", "./Ressources/2- Pics/i23.jpg", "./Ressources/2- Pics/i24.jpg"],2,"find the parisian stadium", ["Stade Vélodrome / Marseille", "Parc des Princes / Paris", "Stade de France / Saint-Denis", "Maracana / Rio de Janeiro"])
 
-const pic3 = new Picture(["./Ressources/2- Pics/i31.jpg", "./Ressources/2- Pics/i32.jpg", "./Ressources/2- Pics/i33.jpg", "./Ressources/2- Pics/i34.jpg"],3,"find the painting representing a part of Paris")
+const pic3 = new Picture(["./Ressources/2- Pics/i31.jpg", "./Ressources/2- Pics/i32.jpg", "./Ressources/2- Pics/i33.jpg", "./Ressources/2- Pics/i34.jpg"],1,"find Mondrian Place de la Concorde", ["Place de la Concorde", "New York City", "Trafalgar Square", "Composition II en rouge, bleu et jaune"])
 
-var pictures=[pic1,pic2,pic3]
+const pic4 = new Picture(["./Ressources/2- Pics/i41.jpg", "./Ressources/2- Pics/i42.jpg", "./Ressources/2- Pics/i43.jpg", "./Ressources/2- Pics/i44-roma.jpg"],1,"find the parisian one", ["Seine", "Tames", "Saône & Rhône", "Tiber"])
+
+const pic5 = new Picture(["./Ressources/2- Pics/i51-chirac1997.jpg", "./Ressources/2- Pics/i52-1974.jpg", "./Ressources/2- Pics/i53-chirac2002.jpg", "./Ressources/2- Pics/i54-1978.jpg"],4,"find a Paris mayor", ["Chirac in 1997", "Chirac in 1974", "Chirac in 2002", "Chirac in 1978, Maire de Paris"])
+
+
+
+var pictures=[pic1,pic2,pic3,pic4,pic5]
 
 
 
@@ -117,16 +123,28 @@ var indexPics = 0;
 
 
 // Initialisation de l'array audios pour tests
-const audio1 = new Audio("./Ressources/Music/Cut/paris-a-le-blues.mp3",["mad in paris", "paris a le blues"],"Find the group or the song");
-const audio2 = new Audio("./Ressources/Music/Cut/paris-mai.mp3",["claude nougaro", "nougaro", "paris mai"],"Find the artist or the song");
-const audio3 = new Audio("./Ressources/Music/Cut/paris-sud.mp3",["1995","Paris sud minute"],"Find the group or the song");
-const audio4 = new Audio("./Ressources/Music/Cut/billie-april.mp3", ["billie holiday", "april in paris"],"Find the artist or the song")
-const audio5 = new Audio("./Ressources/Music/Cut/ella-i-love.mp3", ["ella fitzgerald", "i love paris"], "Find the artist or the song")
-const audio6 = new Audio("./Ressources/Music/Cut/jayzkanye-niggaz.mp3", ["jay z", "kanye west", "niggaz in paris", "jayz", "jay-z"], "Find one artist or the song")
-const audio7 = new Audio("./Ressources/Music/Cut/midnight.mp3", ["midnight in paris", "woody allen", "sidney bechet", "si tu vois ma mere", "si tu vois ma mère"], "Find the artist, the song or the movie")
-const audio8 = new Audio("./Ressources/Music/Cut/ntm-parissouslesbombes.mp3", ["ntm", "paris sous les bombes"], "Find the group or the song")
-const audio9 = new Audio("./Ressources/Music/Cut/paris-seveille.mp3", ["dutronc", "jacques dutronc", "paris s'eveille", "paris s'éveille"], "Find the artist or the song")
-var audios=[audio1,audio2,audio3,audio4,audio5,audio6,audio7,audio8,audio9];
+const audio1 = new Audio("./Ressources/Music/Cut/paris-a-le-blues.mp3",["mad in paris", "paris a le blues"],"find the group or the song", "Mad in Paris - Paris a le blues");
+const audio2 = new Audio("./Ressources/Music/Cut/paris-mai.mp3",["claude nougaro", "nougaro", "paris mai"],"find the artist or the song", "Claude Nougaro - Paris Mai");
+const audio3 = new Audio("./Ressources/Music/Cut/paris-sud.mp3",["1995","Paris sud minute"],"find the group or the song", "1995 - Paris Sud Minute");
+const audio4 = new Audio("./Ressources/Music/Cut/billie-april.mp3", ["billie holiday", "april in paris"],"find the artist or the song", "Billie Holiday - April in Paris")
+const audio5 = new Audio("./Ressources/Music/Cut/ella-i-love.mp3", ["ella fitzgerald", "i love paris"], "find the artist or the song", "Ella Fitzgerald - I love Paris")
+const audio6 = new Audio("./Ressources/Music/Cut/jayzkanye-niggaz.mp3", ["jay z", "kanye west", "niggaz in paris", "jayz", "jay-z"], "find one artist or the song", "Jay-z & Kanye West - Niggaz in Paris")
+const audio7 = new Audio("./Ressources/Music/Cut/midnight.mp3", ["midnight in paris", "woody allen", "sidney bechet", "si tu vois ma mere", "si tu vois ma mère"], "find the artist, the song or the movie", "Sidney Bechet - Si tu vois ma mère (Midnight in Paris soundtrack)")
+const audio8 = new Audio("./Ressources/Music/Cut/ntm-parissouslesbombes.mp3", ["ntm", "paris sous les bombes"], "find the group or the song", "NTM - Paris sous les bombes")
+const audio9 = new Audio("./Ressources/Music/Cut/paris-seveille.mp3", ["dutronc", "jacques dutronc", "paris s'eveille", "paris s'éveille"], "find the artist or the song", "Jacques Dutronc - Paris sous les bombes")
+const audio10 = new Audio("./Ressources/Music/Cut/oh-ville-lumiere.mp3", ["parc des princes"], "what place are we ?", "Parc des Princes - Oh ville lumière")
+const audio11 = new Audio("./Ressources/Music/Cut/paris-austerlitz.mp3", ["gare d'austerlitz", "austerlitz"], "in which train station are we ?", "Gare d'Austerlitz")
+const audio12 = new Audio("./Ressources/Music/Cut/antoine-kombouare.mp3", ["madrid", "real", "real madrid"], "who is PSG opponent ?", "Real Madrid - 1993")
+const audio13 = new Audio("./Ressources/Music/Cut/bill-evans-april-in-paris.mp3",["bill evans", "april in paris"], "find the pianist or the song", "Bill Evans - April in Paris");
+const audio14 = new Audio("./Ressources/Music/Cut/ligne-4.mp3", ["barbes", "barbès", "barbes rochechouart", "barbès rochechouart", "barbès-rochechouart", "barbes-rochechouart"], "what is next metro station ?", "Barbes Rochechouart")
+const audio15 = new Audio("./Ressources/Music/Cut/midnight.mp3",["Midnight in Paris"], "what movie the scene is from ?", "Midnight in Paris - Ending Scene")
+const audio16 = new Audio("./Ressources/Music/Cut/roy-hargrove-quintet-strasbourg-st-denis.mp3", ["roy hargrove", "strasbourg st denis", "strasbourg-st-denis", "strasbourg st-denis"], "find the artist or the song");
+const audio17 = new Audio("./Ressources/Music/Cut/st-germain-lauxerrois.mp3", ["louvre", "place du louvre"], "we are on a place. which one ?", "Place du Louvre")
+const audio18 = new Audio("./Ressources/Music/Cut/warning-siren.mp3", ["12h", "midi", "12"], "what time is it ?", "12h");
+
+
+
+var audios=[audio1,audio2,audio3,audio4,audio5,audio6,audio7,audio8,audio9, audio10,audio11,audio12,audio13,audio14,audio15,audio16,audio17,audio18];
 
 var audioPlayed=[];
 var indexAudios = 0;

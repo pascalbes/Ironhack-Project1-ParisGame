@@ -6,32 +6,32 @@ var timer=0;
 
 var nbAudios = 3 //nombre d'audios proposés
 var nbPics = 3 //nombre d'images proposées
-var nbMaps = 2 //nombre de maps proposées
+var nbMaps = 3 //nombre de maps proposées
 
 
-var gamePlan=[function() { gameIntro("Maps")},loadMapGame,function() { nextMap('first')},function() { nextMap()},function() { nextMap()}]
+//var gamePlan=[function() { gameIntro("Maps")},loadMapGame,function() { nextMap('first')},function() { nextMap()},function() { nextMap()}]
 
-// var gamePlan=[loadHomePage2, function() { gameIntro("Music")},loadMusicGame, function() { nextTitle('first') }];
+var gamePlan=[loadHomePage2, function() { gameIntro("Music")},loadMusicGame, function() { nextTitle('first') }];
 
-// for (let i=2;i<=nbAudios;i++) {
-//     gamePlan.push(nextTitle);
-// }
+for (let i=2;i<=nbAudios;i++) {
+    gamePlan.push(nextTitle);
+}
 
-// gamePlan.push(function() { gameIntro("Pics")})
-// gamePlan.push(loadPicGame);
-// gamePlan.push(function() { nextPic('first')});
+gamePlan.push(function() { gameIntro("Pics")})
+gamePlan.push(loadPicGame);
+gamePlan.push(function() { nextPic('first')});
 
-// for (let i=2;i<=nbPics;i++) {
-//     gamePlan.push(nextPic);
-// }
+for (let i=2;i<=nbPics;i++) {
+    gamePlan.push(nextPic);
+}
 
-// gamePlan.push(function() { gameIntro("Maps")});
-// gamePlan.push(loadMapGame);
-// //gamePlan.push(function() { nextMap('first')});
+gamePlan.push(function() { gameIntro("Maps")});
+gamePlan.push(loadMapGame);
+gamePlan.push(function() { nextMap('first')});
 
-// for (let i=2;i<=nbMaps;i++) {
-//     gamePlan.push(nextMap);
-// }
+for (let i=2;i<=nbMaps;i++) {
+    gamePlan.push(nextMap);
+}
 
 
 console.log(gamePlan);
@@ -88,7 +88,6 @@ function nextMap(type) {
 
     timer=0;
 
-
     if (type==="first") { // premier titre lancé
         //suppression bouton start
 
@@ -108,14 +107,13 @@ function nextMap(type) {
     //affichage photo
     locations[indexMap].loadPic();
 
-    debugger
-
     //lancement chrono / après la photo
     var intervalID = setInterval(() => {
         timer++
         gameInfo1.innerHTML=countdownTimer(timer,3000);
         if (timer>3000) {
             clearInterval(intervalID);
+            intervalID=0;
             updateScore("map", -1, timer)
             nextPart();
         }
@@ -133,6 +131,8 @@ function nextMap(type) {
         var yPos=(event.y-event.srcElement.offsetTop+window.scrollY)/event.srcElement.height;
         alert(locations[indexMap].isTheGoodOne(xPos,yPos));
 
+        clearInterval(intervalID);
+        intervalID=0;
         nextPart();
     }
 
@@ -194,21 +194,25 @@ function nextPic(type) {
     }
 
     function checkResult(indexClicked) {
-        if (pictures[indexPics].isTheGoodOne(indexClicked)) {
+        if (pictures[indexPics].isTheGoodOne(indexClicked)) {//pic ok
 
             updateScore("pics", 1, timer)
 
-            if (picsShown.length < nbPics ) {
+            if (picsShown.length < nbPics ) {//pic ok + next pic
                 clearInterval(intervalID);
                 intervalID=0;
                 nextPart(); 
             }
-            else {
+            else { //pic ok + next game
+                clearInterval(intervalID);
+                intervalID=0;
                 nextPart();
             }
         }
         else { //wrong selection
             updateScore("pics", 0, timer)
+            clearInterval(intervalID);
+            intervalID=0;
             nextPart();
         }
     }
@@ -245,8 +249,8 @@ function nextTitle(type) {
 
     var intervalID = setInterval(() => {
         timer++
-        gameInfo1.innerHTML=countdownTimer(timer,1500);
-        if (timer>1500) {
+        gameInfo1.innerHTML=countdownTimer(timer,2000);
+        if (timer>2000) {
             inputAudio.classList.add("shake-horizontal")
             clearInterval(intervalID);
             updateScore("music", -1, timer)
