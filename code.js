@@ -5,7 +5,7 @@ var indexGamePlan=0;
 var timer=0;
 
 var nbAudios = 3 //nombre d'audios proposés
-var nbPics = 3 //nombre d'images proposées
+var nbPics = 16 //nombre d'images proposées
 var nbMaps = 3 //nombre de maps proposées
 
 

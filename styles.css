@@ -238,6 +238,16 @@ h4 {
 		 background-position: 100% 40%;
 	}
 }
+
+#home {
+  position: absolute;
+  border: none;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  font-family: 'Parisienne', cursive;
+  font-size: 30px;
+}
  
 
 #intro-button {
