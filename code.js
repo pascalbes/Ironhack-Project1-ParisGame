@@ -4,9 +4,9 @@
 var indexGamePlan=0;
 var timer=0;
 
-var nbAudios = 3 //nombre d'audios proposés
-var nbPics = 16 //nombre d'images proposées
-var nbMaps = 3 //nombre de maps proposées
+var nbAudios = 2 //nombre d'audios proposés
+var nbPics = 2 //nombre d'images proposées
+var nbMaps = 2 //nombre de maps proposées
 
 
 var gamePlan=[function() { gameIntro("Maps")},loadMapGame,function() { nextMap('first')},function() { nextMap()},function() { nextMap()}]
@@ -400,12 +400,13 @@ function loadMusicGame() {
         }
         imageCarroussel()
 
+        nextPart();
 
-        var startButton=document.getElementById("start-button");
+        // var startButton=document.getElementById("start-button");
 
-        startButton.onclick = function() {
-            nextPart();
-        }
+        // startButton.onclick = function() {
+        //     nextPart();
+        // }
 
     });
         
@@ -423,7 +424,12 @@ function gameIntro(type) {
           
         containerElem.innerHTML = response.data 
 
-        
+        var wrapperElem=document.getElementsByClassName("wrapper-intro")
+        wrapperElem[0].style.background="url(\"./Ressources/Home Page/Hot_8_Brass_Band_2016_11_08_10.jpg\") no-repeat left / 120%"
+        wrapperElem[1].style.background="url(\"./Ressources/Home Page/i4.jpg\") no-repeat left / 120%"
+
+        console.log(wrapperElem)
+        console.log(wrapperElem[0].background)
 
         //Bouton page d'intro. Au clic, jeu1 : suppression du contenu du html et ajout du contenu de la page suivante
         var btnIntro=document.getElementById("intro-button") ;
