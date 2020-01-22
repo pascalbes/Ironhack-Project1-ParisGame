@@ -1,4 +1,3 @@
-
 // DATA INITIALIZATION
 const scoreDiv=document.getElementById("score-div")
 const scoreElem=document.getElementById("score")
@@ -14,6 +13,14 @@ const gameInfo3=document.getElementById("gameInfo3")
 gameInfoDiv.style.visibility="hidden"
 
 const containerElem = document.getElementById("container")
+
+//SCORES
+
+var titlesArr=["Good Answers", "Bonus time", "Bad Answers", "Time elapsed", "Penalties"]
+var scoresArr=[0, 0, 0, 0, 0];
+var nbScoresArr=[0, 0, 0, 0, 0];
+var totalScore=0
+
 
 ///DATA MAP GAME
 
@@ -52,10 +59,26 @@ class Location {
 
 const loc1= new Location("./Ressources/Plan Paris/tobefound/pyramides.jpg", "Pyramide du Louvre", 0.462, 0.492, "")
 const loc2= new Location("./Ressources/Plan Paris/tobefound/mouff2.jpg", "Rue Mouffetard", 0.528, 0.744, "")
-
 const loc3= new Location("./Ressources/Plan Paris/tobefound/philha.jpg", "Philharmonie de Paris", 0.733, 0.135, "")
 
-var locations=[loc1, loc2, loc3];
+const loc4= new Location("./Ressources/Plan Paris/tobefound/alex3.jpg", "Pont Alexandre III",0.359, 0.458, "")
+const loc5= new Location("./Ressources/Plan Paris/tobefound/arc.jpg", "Arc de Triomphe",0.274, 0.34, "")
+const loc6= new Location("./Ressources/Plan Paris/tobefound/batofar.jpg", "Batofar", 0.665, 0.822, "")
+const loc7= new Location("./Ressources/Plan Paris/tobefound/bnf-1.jpg", "Bibliothèque Nationale de France", 0.648, 0.818, "")
+const loc8= new Location("./Ressources/Plan Paris/tobefound/catacombes.jpg", "catacombes", 0.446, 0.811, "")
+const loc9= new Location("./Ressources/Plan Paris/tobefound/frigos.png", "Frigos", 0.66, 0.849, "")
+const loc10= new Location("./Ressources/Plan Paris/tobefound/heloise.jpg", "Héloïse et Abérlard", 0.722, 0.504, "")
+const loc11= new Location("./Ressources/Plan Paris/tobefound/iron.png", "Ironhack", 0.704, 0.592, "")
+const loc12= new Location("./Ressources/Plan Paris/tobefound/Italie 2.jpg", "Italie 2", 0.552, 0.853, "")
+const loc13= new Location("./Ressources/Plan Paris/tobefound/joconde.jpg", "Mona Lisa, Musée du Louvre", 0.461, 0.499, "")
+const loc14= new Location("./Ressources/Plan Paris/tobefound/new-morning.jpg", "New Morning", 0.546, 0.347, "")
+const loc15= new Location("./Ressources/Plan Paris/tobefound/pont-neuf.jpg", "Pont Neuf", 0.48, 0.521, "")
+const loc16= new Location("./Ressources/Plan Paris/tobefound/rev.png", "Révolution, Place de la Concorde", 0.398, 0.44, "")
+const loc17= new Location("./Ressources/Plan Paris/tobefound/tour eiffel.jpg", "Tour Eiffel", 0.271, 0.521, "")
+const loc18= new Location("./Ressources/Plan Paris/tobefound/vosges.jpg", "Place des Vosges", 0.6, 0.555, "")
+
+
+var locations=[loc1, loc2, loc3, loc4, loc5, loc6, loc7, loc8, loc9, loc10, loc11, loc12, loc13, loc14, loc15, loc16, loc17, loc18];
 
 var indexMap = 0;
 var locPushed=[];
@@ -76,7 +99,10 @@ class Picture {
         var picsElements=document.getElementsByClassName("pics-element")
 
         for(let i=0;i<4;i++) {
+            picsElements[i].classList.remove("flip-in-ver-left");
             picsElements[i].src=this.files[i]
+            picsElements[i].classList.add("flip-in-ver-left");
+            console.log(picsElements[i])
         }
     }
 
@@ -116,7 +142,7 @@ const pic14 = new Picture(["./Ressources/2- Pics/i71-parma.jpg", "./Ressources/2
 
 const pic15 = new Picture(["./Ressources/2- Pics/i81-paris.jpg", "./Ressources/2- Pics/i82-girolle.jpg", "./Ressources/2- Pics/i83-amanite.jpg", "./Ressources/2- Pics/i84cèpes.jpg"],1,"find parisian mushroom", ["Champignons de Paris", "Girolles", "Amanites", "Cèpes"])
 
-const pic16 = new Picture(["./Ressources/2- Pics/i91.jpg", "./Ressources/2- Pics/i92.jpg", "./Ressources/2- Pics/i93mont.jpg", "./Ressources/2- Pics/i94roma.jpg"],4,"find parisian stairs", ["NY / Joker", "Lisboa", "Paris", "Roma"])
+const pic16 = new Picture(["./Ressources/2- Pics/i91.jpg", "./Ressources/2- Pics/i92.jpg", "./Ressources/2- Pics/i93mont.jpg", "./Ressources/2- Pics/i94roma.jpg"],3,"find parisian stairs", ["NY / Joker", "Lisboa", "Paris", "Roma"])
 
 const pic17 = new Picture(["./Ressources/2- Pics/", "./Ressources/2- Pics", "./Ressources/2- Pics", "./Ressources/2- Pics"],4,"find ", ["", "", "", ""])
 
@@ -231,7 +257,14 @@ function updateScore(type,result,t) {
     var score1=Number(scoreElem.textContent);
     var score=0;
     var bonus=0;
-    var malus=0;
+    var bad=0;
+    var elapsed=0;
+    var penalties=0
+
+    //CAS ELAPSED
+    if (result===-1) {// cas time elapsed
+        elapsed = -1000;
+    }
 
     //CASE MUSIC
     if (type==="music" && result===1) { //cas ok
@@ -239,10 +272,12 @@ function updateScore(type,result,t) {
         bonus = Math.floor(2000 - t);
     }
     else if (type==="music" && result===0) { //cas entrée nok
-        malus = 500;
+        penalties = -500;
+        nbScoresArr[4]++
     }
-    else if (type==="music" && result===-1) {// cas time elapsed
-        malus = 1000;
+    else if (type==="music" && result===-0.5) { //cas entrée nok
+        console.log("bad")
+        bad = -500;
     }
 
     //CASE PICS
@@ -251,51 +286,61 @@ function updateScore(type,result,t) {
         bonus = Math.floor(2000 - t);
     }
     else if (type==="pics" && result===0) { //cas entrée nok
-        malus = 500;
-    }
-    else if (type==="pics" && result===-1) {// cas time elapsed
-        malus = 1000;
+        bad = -500;
     }
 
     //CASE MAPS
-    if (type==="map" && result===-1) { //time elapsed
-        malus = 1000;
-    }
-    else if (type==="map" && result !== -1) {//result : distance
+    if (type==="map" && result !== -1) {//result : distance
         if (result<2000) {
             score = Math.floor(5000 - result*5/2);
+            bonus = Math.floor(2000 - t);
         }
         else {
-            score=0;
-        }
-        
-        if (result<1000) {
-            bonus = Math.floor(2000 - t);
+            bad=-500;
         }
     }
 
-    score1 = score1 + score + bonus - malus; 
+    score1 = score1 + score + bonus + bad + elapsed + penalties; 
 
     scoreElem.textContent=Math.floor(score1.toString());
 
-    return [score, bonus, malus]
+    score!==0 ? nbScoresArr[0]++ : 1
+    bonus!==0 ? nbScoresArr[1]++ : 1
+    bad!==0 ? nbScoresArr[2]++ : 1
+    elapsed!==0 ? nbScoresArr[3]++ : 1
+
+    console.log([score, bonus, bad, elapsed, penalties])
+
+    return [score, bonus, bad, elapsed, penalties]
 }
 
 
 //FONCTION RECAP :affiche le recap de l'action réalisée sur un jeu
-function recap(typeGame, typeResult, time, [score, bonus, malus], elemClicked) {
+function recap(typeGame, typeResult, time, [score, bonus, bad, elapsed, penalties], elemClicked) {
 
-    console.log("recap", elemClicked)
+    //update des totaux
+    scoresArr[0] += score
+    scoresArr[1] += bonus 
+    scoresArr[2] += bad
+    scoresArr[3] += elapsed
+    scoresArr[4] += penalties
 
+    totalScore = score+bonus+bad+elapsed+penalties;
+
+    console.log(scoresArr, nbScoresArr)
+
+    //arrêt de l'audio en cours
     if (typeGame==="music") {
         audios[0].stopMusic();
         var inputAudio=document.getElementById("music-input");
         inputAudio.setAttribute("editable", false)
     }
 
+    //affichage du recap
     var recapDiv=document.querySelector("#recap");
     recapDiv.style.visibility="visible";
 
+    //passage à la suite à "enter"
     var btnNext=document.querySelector("#next");
 
     window.addEventListener("keydown", function(event) {
@@ -303,101 +348,105 @@ function recap(typeGame, typeResult, time, [score, bonus, malus], elemClicked) {
         if (event.keyCode === 13 && recapDiv.style.visibility==="visible") {
           // Cancel the default action, if needed
           event.preventDefault();
-          console.log("kikou")
+          
           // Trigger the button element with a click
           document.querySelector("#next").click();
         }
     });
 
 
+    //au clic : on cache la pop-up et on vide le tableau
     btnNext.onclick = function() {
+
         recapDiv.style.visibility="hidden";
+        var tableLines=document.getElementById("recap-table").querySelector("tbody").querySelectorAll("tr")
+
+        tableLines.forEach((tr) => {
+            tr.remove();
+        });
+
         nextPart();
     }
 
-    //affichage pr le map
-    if (typeGame==="map") {
-
-
-        //map 2/4
-        recapDiv.getElementsByTagName("span")[1].innerHTML=titlesDiv.querySelector("h1").innerText;
-
-        //distance + comment
-        recapDiv.getElementsByTagName("span")[2].innerHTML="You are " + typeResult + " meters away"
-
-        if (typeResult===-1) {
-            recapDiv.getElementsByTagName("span")[3]="Time Elapsed"
+    //bonne ou mauvaise réponse
+    if (bonus >0) {
+        var mapInfo = ""
+        if (typeGame==="map") {
+            mapInfo = "<br>" + "You are " + typeResult + " meters away";
         }
-        else if (typeResult < 100) {
-            recapDiv.getElementsByTagName("span")[3].innerHTML="Bravo !!"
-        }
-        else if (typeResult < 500) {
-            recapDiv.getElementsByTagName("span")[3].innerHTML="well done!"
-        }
-        else if (typeResult < 1000) {
-            recapDiv.getElementsByTagName("span")[3].innerHTML="not bad!"
-        }
-        else if (typeResult < 2000) {
-            recapDiv.getElementsByTagName("span")[3].innerHTML="making a \"small\" detour ?"
-        }
-        else if (typeResult < 5000) {
-            recapDiv.getElementsByTagName("span")[3].innerHTML="do not make any appointment there"
-        }
-        else {
-            recapDiv.getElementsByTagName("span")[3].innerHTML="at least you selected Paris right ? ;)"
-        }
-        
-        //score
-        var totalScore = score+bonus-malus;
-        recapDiv.getElementsByTagName("span")[4].innerHTML="Total score: " + totalScore;
-        recapDiv.getElementsByTagName("span")[5].innerHTML="Score: " + score
-        recapDiv.getElementsByTagName("span")[6].innerHTML="Time bonus: " + bonus
-        recapDiv.getElementsByTagName("span")[7].innerHTML="Penalties: " + malus
-
-        //affichage résultat
-        recapDiv.getElementsByTagName("span")[8].innerHTML="You had to look for: " + elemClicked
-
-
+        document.getElementById("recap-text").innerHTML="Well done !" + mapInfo
     }
     else {
-        //pics et music
-        if (typeResult===1) {
-            recapDiv.getElementsByTagName("span")[0].innerHTML="v"
-            recapDiv.getElementsByTagName("span")[2].innerHTML="Victory !"
-        }
-        else if (typeResult===0) {
-            recapDiv.getElementsByTagName("span")[0].innerHTML="x";
-
-            if (typeResult==="music") {
-                recapDiv.getElementsByTagName("span")[2].innerHTML="Audio passed"
-            }
-            else if (typeResult==="pics") {
-                recapDiv.getElementsByTagName("span")[2].innerHTML="Wrong selection"
-            }
-            
-        }
-        else if (typeResult===-1) {
-            recapDiv.getElementsByTagName("span")[0].innerHTML="x";
-            recapDiv.getElementsByTagName("span")[2].innerHTML="Time Elapsed"
-        }
-
-        //"Audio 2/3"
-        recapDiv.getElementsByTagName("span")[1].innerHTML=titlesDiv.querySelector("h1").innerText;
-
-        //Score
-        var totalScore = score+bonus-malus;
-        recapDiv.getElementsByTagName("span")[3].innerHTML="Total score: " + totalScore;
-        recapDiv.getElementsByTagName("span")[4].innerHTML="Score: " + score
-        recapDiv.getElementsByTagName("span")[5].innerHTML="Time bonus: " + bonus
-        recapDiv.getElementsByTagName("span")[6].innerHTML="Penalties: " + malus
-
-        //résultat
-        if (typeGame==="music") {
-            recapDiv.getElementsByTagName("span")[7].innerHTML="You listened to: " + elemClicked
-        }
-        else if (typeGame==="pics") {
-            recapDiv.getElementsByTagName("span")[7].innerHTML="You clicked on: " + elemClicked
-        }
+        document.getElementById("recap-text").innerHTML="Too bad!"
     }
+
+    //Score total
+    document.getElementById("recap-score").innerHTML=totalScore + " pts"
+
+    var recapTable=document.getElementById("recap-table").querySelector("tbody")
+
+    function addLine2(titreItem, scoreItem) {
+
+        var tr = document.createElement("tr")
+        recapTable.appendChild(tr)
+        var td1=document.createElement("td")
+        td1.innerHTML=titreItem
+        tr.appendChild(td1)
+        var td2=document.createElement("td")
+        td2.innerHTML=scoreItem + " pts"
+        tr.appendChild(td2)
+    }
+
+    //update du tableau
+    if (score>0) {
+
+        //good answer
+        addLine2("Good Answer", score)
+
+        //bonus time
+        addLine2("Bonus time", bonus)
+
+    }
+    else if (bad<0) {
+        //bad answer
+        addLine2("Bad Answer", bad)
+    }
+    else if (elapsed<0) {
+        addLine2("Elapsed time", elapsed)
+    }
+    if (penalties<0) {
+        addLine2("Penalties", penalties)
+    }
+
+        
+
+    // //affichage pr le map
+    // if (typeGame==="map") {
+
+
+
+
+        // if (typeResult===-1) {
+        //     recapDiv.getElementsByTagName("span")[3]="Time Elapsed"
+        // }
+        // else if (typeResult < 100) {
+        //     recapDiv.getElementsByTagName("span")[3].innerHTML="Bravo !!"
+        // }
+        // else if (typeResult < 500) {
+        //     recapDiv.getElementsByTagName("span")[3].innerHTML="well done!"
+        // }
+        // else if (typeResult < 1000) {
+        //     recapDiv.getElementsByTagName("span")[3].innerHTML="not bad!"
+        // }
+        // else if (typeResult < 2000) {
+        //     recapDiv.getElementsByTagName("span")[3].innerHTML="making a \"small\" detour ?"
+        // }
+        // else if (typeResult < 5000) {
+        //     recapDiv.getElementsByTagName("span")[3].innerHTML="do not make any appointment there"
+        // }
+        // else {
+        //     recapDiv.getElementsByTagName("span")[3].innerHTML="at least you selected Paris right ? ;)"
+        // }
+        
     
 }

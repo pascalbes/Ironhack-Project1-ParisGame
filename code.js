@@ -1,17 +1,20 @@
 /// GAME MANAGEMENT
 
-//Définition de la matrice du jeu
-var indexGamePlan=0;
-var timer=0;
+//Définition des paramêtres principaux du jeu
 
 var nbAudios = 2 //nombre d'audios proposés
 var nbPics = 2 //nombre d'images proposées
-var nbMaps = 2 //nombre de maps proposées
+var nbMaps = 18 //nombre de maps proposées
+
+var maxScore=(nbAudios+nbPics+nbMaps)*7000;
+
+var timer=0;
 
 
-var gamePlan=[function() { gameIntro("Maps")},loadMapGame,function() { nextMap('first')},function() { nextMap()},function() { nextMap()}]
 
+//Définition de la matrice du jeu
 
+var indexGamePlan=0;
 
 var gamePlan=[loadHomePage2, function() { gameIntro("Music")},loadMusicGame, function() { nextTitle('first') }];
 
@@ -35,6 +38,11 @@ for (let i=2;i<=nbMaps;i++) {
     gamePlan.push(nextMap);
 }
 
+gamePlan.push(loadResults);
+
+//Pour test unitaire
+// var gamePlan=[loadMapGame, nextMap]
+
 
 console.log(gamePlan);
 
@@ -46,6 +54,79 @@ nextPart("firstPart");
 function nextPart(type) {
     type!=="firstPart" ? indexGamePlan++ : 1 
     gamePlan[indexGamePlan]();
+}
+
+
+
+
+//Load Results
+
+function loadResults() {
+
+    containerElem.innerHTML = "";
+
+    //chargement du html
+    axios
+    .get('./result.html')
+    .then(response => {
+
+        containerElem.innerHTML = response.data 
+
+        // //Actualisation des titres
+
+        scoreDiv.style.visibility="hidden"
+        titlesDiv.style.visibility="hidden"
+        gameInfoDiv.style.visibility="hidden"
+        gameInfoDiv.style.position="fixed"
+
+        console.log(totalScore, Number(scoreElem.textContent), maxScore)
+
+        //commentaires
+        if (Number(scoreElem.textContent)/maxScore < 0.5) {
+            document.getElementById("result-text").innerHTML="Seriously ?!"
+            document.getElementById("result-container").querySelectorAll("p")[1].innerHTML="The only Paris you deserve is <span class=\"red\">Paris Hilton</span>";
+        }
+        else if (Number(scoreElem.textContent)/maxScore < 0.9) {
+            document.getElementById("result-text").innerHTML="Good job"
+            document.getElementById("result-container").querySelectorAll("p")[1].innerHTML="What about Paris Mayor ?";
+        }
+        else {
+            document.getElementById("result-text").innerHTML="Impressive!"
+            document.getElementById("result-container").querySelectorAll("p")[1].innerHTML="You've just been reported to Anne Hidalgo";
+        }
+        
+        //score
+        document.getElementById("total-score").innerHTML="total score: " + Number(scoreElem.textContent);
+
+        var resultTable=document.getElementById("table-result").querySelector("tbody");
+
+
+        function addLine3(titreItem, nbItem, scoreItem) {
+            
+            var tr = document.createElement("tr")
+            resultTable.appendChild(tr)
+
+            var td1=document.createElement("td")
+            td1.innerHTML=titreItem
+            tr.appendChild(td1)
+
+            var td2=document.createElement("td")
+            td2.innerHTML=nbItem
+            tr.appendChild(td2)
+
+            var td3=document.createElement("td")
+            td3.innerHTML=scoreItem + " pts"
+            tr.appendChild(td3)
+        }
+
+        console.log(titlesArr, nbScoresArr,scoresArr)
+
+        scoresArr.forEach((v,i) => {
+            addLine3(titlesArr[i], nbScoresArr[i],scoresArr[i])
+        });
+
+    });
+
 }
 
 
@@ -86,6 +167,11 @@ function nextMap(type) {
     mapElement=document.getElementById("image-div");
 
     timer=0;
+    var score = 0;
+    var bonus = 0;
+    var malus = 0;
+    var elapsed = 0;
+    var penalties=0;
 
     if (type==="first") { // premier titre lancé
         //suppression bouton start
@@ -113,8 +199,8 @@ function nextMap(type) {
         if (timer>2000) {
             clearInterval(intervalID);
             intervalID=0;
-            updateScore("map", -1, timer);
-            recap("map", 1000000, 0, [0, 0, 1000], locations[indexMap].name)
+            elapsed=updateScore("map", -1, timer)[3];
+            recap("map", 1000000, 0, [0, 0, 0, elapsed, 0], locations[indexMap].name)
         }
     }, 10);
 
@@ -129,6 +215,9 @@ function nextMap(type) {
         var xPos=(event.x-event.srcElement.offsetLeft+window.scrollX)/event.srcElement.width;
         var yPos=(event.y-event.srcElement.offsetTop+window.scrollY)/event.srcElement.height;
 
+        //pour constitution BdD
+        //console.log(xPos, yPos)
+
         var distance = Math.floor(locations[indexMap].isTheGoodOne(xPos,yPos));
         var finalTime=timer,
 
@@ -136,7 +225,7 @@ function nextMap(type) {
         clearInterval(intervalID);
         intervalID=0;
 
-        recap("map", distance, finalTime, [arr[0], arr[1], 0], locations[indexMap].name)
+        recap("map", distance, finalTime, [arr[0], arr[1], arr[2], 0, 0], locations[indexMap].name)
 
     }
 
@@ -151,6 +240,8 @@ function nextPic(type) {
     var score = 0;
     var bonus = 0;
     var malus = 0;
+    var elapsed = 0;
+    var penalties=0;
 
     //chargement des photos
 
@@ -160,8 +251,8 @@ function nextPic(type) {
         if (timer>2000) {
             //définir une animation NOK
             clearInterval(intervalID);
-            malus=updateScore("pics", -1, timer)[2];
-            recap("pics", -1, 0, [0, 0, malus], "")
+            elapsed=updateScore("pics", -1, timer)[3];
+            recap("pics", -1, 0, [0, 0, 0, elapsed, 0], "")
         }
     }, 10);
 
@@ -214,19 +305,19 @@ function nextPic(type) {
             if (picsShown.length < nbPics ) {//pic ok + next pic
                 clearInterval(intervalID);
                 intervalID=0;
-                recap("pics", 1, finalTime, [score, bonus, malus], pictures[indexPics].solutions[indexClicked])
+                recap("pics", 1, finalTime, [score, bonus, malus, elapsed,0], pictures[indexPics].solutions[indexClicked])
             }
             else { //pic ok + next game
                 clearInterval(intervalID);
                 intervalID=0;
-                recap("pics", 1, finalTime, [score, bonus, malus], pictures[indexPics].solutions[indexClicked])
+                recap("pics", 1, finalTime, [score, bonus, malus, elapsed,0], pictures[indexPics].solutions[indexClicked])
             }
         }
         else { //wrong selection
-            updateScore("pics", 0, timer)
+            malus=updateScore("pics", 0, timer)[2]
             clearInterval(intervalID);
             intervalID=0;
-            recap("pics", 0, 0, [0, 0, malus], pictures[indexPics].solutions[indexClicked])
+            recap("pics", 0, 0, [0, 0, malus, 0, penalties], pictures[indexPics].solutions[indexClicked])
         }
     }
 }
@@ -264,6 +355,8 @@ function nextTitle(type) {
     var score = 0;
     var bonus = 0;
     var malus = 0;
+    var elapsed = 0;
+    var penalties=0;
 
     var intervalID = setInterval(() => {
         timer++
@@ -271,8 +364,8 @@ function nextTitle(type) {
         if (timer>2000) {
             inputAudio.classList.add("shake-horizontal")
             clearInterval(intervalID);
-            malus += updateScore("music", -1, timer)
-            recap("music", -1, 0, [0, 0, malus], audios[indexAudios].name)
+            elapsed = updateScore("music", -1, timer)[3]
+            recap("music", -1, 0, [0, 0, malus, elapsed, penalties], audios[indexAudios].name)
         }
     }, 10);
 
@@ -335,14 +428,14 @@ function nextTitle(type) {
                 clearInterval(intervalID);
                 intervalID=0;
 
-                recap("music", 1, finalTime, [score, bonus, malus], audios[indexAudios].name)
+                recap("music", 1, finalTime, [score, bonus, malus, malus, penalties], audios[indexAudios].name)
 
             }
 
             else { //Next audio
                 clearInterval(intervalID);
                 intervalID=0;
-                recap("music", 1, finalTime, [score, bonus, malus], audios[indexAudios].name)
+                recap("music", 1, finalTime, [score, bonus, malus, 0, penalties], audios[indexAudios].name)
             }
         }
         else {//entrée nok !
@@ -354,12 +447,12 @@ function nextTitle(type) {
                 clearInterval(intervalID);
                 intervalID=0;
                 inputAudio.value="";
-                malus += updateScore("music", -1, timer)[2]
-                recap("music", 0, finalTime, [0, 0, malus], audios[indexAudios].name)
+                malus = updateScore("music", -0.5, timer)[2]
+                recap("music", 0, finalTime, [0, 0, malus, elapsed, penalties], audios[indexAudios].name)
             }
             else { //mauvaise entrée
                 //enlever des points
-                malus += updateScore("music", 0, timer)[2]
+                penalties += updateScore("music", 0, timer)[4]
                 inputAudio.classList.add("shake-horizontal")
                 //setTimeout(inputAudio.classList.remove("shake-horizontal"),1500)
             }
@@ -425,11 +518,22 @@ function gameIntro(type) {
         containerElem.innerHTML = response.data 
 
         var wrapperElem=document.getElementsByClassName("wrapper-intro")
-        wrapperElem[0].style.background="url(\"./Ressources/Home Page/Hot_8_Brass_Band_2016_11_08_10.jpg\") no-repeat left / 120%"
-        wrapperElem[1].style.background="url(\"./Ressources/Home Page/i4.jpg\") no-repeat left / 120%"
 
-        console.log(wrapperElem)
-        console.log(wrapperElem[0].background)
+        /*
+
+        if (type==="music"){
+            wrapperElem[0].style.background="url(\"./Ressources/Home Page/Hot_8_Brass_Band_2016_11_08_10.jpg\") no-repeat left / 120%"
+        }
+        else if (type==="pics"){
+            wrapperElem[0].style.background="url(\"./Ressources/2- Pics/fe70396f2ae791efa832bbd83b643a44.jpg\") no-repeat left / 120%"
+        }
+        else if (type==="map"){
+            wrapperElem[0].style.background="url(\"./Ressources/Plan Paris/shutterstock_511329829 - cut.jpg\") no-repeat left / 120%"
+        }
+        
+        wrapperElem[1].style.background="url(\"./Ressources/Home\ Page/i4.JPG\") no-repeat left / 120%"
+
+        */
 
         //Bouton page d'intro. Au clic, jeu1 : suppression du contenu du html et ajout du contenu de la page suivante
         var btnIntro=document.getElementById("intro-button") ;
@@ -461,6 +565,17 @@ function loadHomePage2() {
         //Bouton page d'intro. Au clic, jeu1 : suppression du contenu du html et ajout du contenu de la page suivante
         var btnIntro=document.getElementById("intro-button") ;
         
+        window.addEventListener("keydown", function(event) {
+            // Number 13 is the "Enter" key on the keyboard
+            if (event.keyCode === 13 && document.getElementById("intro-button")!==null) {
+              // Cancel the default action, if needed
+              event.preventDefault();
+              
+              // Trigger the button element with a click
+              btnIntro.click();
+            }
+        });
+
         btnIntro.onclick = function() {
             containerElem.innerHTML = "";
             nextPart();
