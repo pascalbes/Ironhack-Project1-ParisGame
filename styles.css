@@ -443,21 +443,26 @@ h4 {
 #pic-element {
   position: fixed;
   visibility: visible;
-  width:600px;
-  height:fit-content;
+  width:fit-content;
+  height:60vh;
   left: 0;
   right: 0;
-  top:25vh;
+  top:0;
+  bottom:0;
   margin: auto;
-  background-color:rgba(255, 255, 255, 0.801);
   z-index: 2;
-  padding: 10px;
+  overflow: hidden;
+  align-items: center;
+  text-align: center;
+  background-color: transparent;
+
 }
 
 #pic-map {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: cover;
+  box-sizing: border-box;
+  max-width: 95%;
+  max-height: 95%;
+  border: 10px rgba(255, 255, 255, 0.801) solid;
 }
 
 .pin-cursor {
