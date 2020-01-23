@@ -6,7 +6,7 @@ body {
     width:100vw;
     height: 100vh;
     background: white;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Montserrat", sans-serif;
     overflow-x: hidden;
 }
 
@@ -24,7 +24,7 @@ body {
         top: 2vh;
         background-color:rgba(255, 255, 255, 0.801);
         z-index: 3;
-        padding: 10px;
+        padding: 1vh;
         visibility: visible;
     }
 
@@ -52,7 +52,7 @@ body {
         top: 20vh;
         background-color:rgba(255, 255, 255, 0.801);
         z-index: 2;
-        padding: 10px;
+        padding: 1vh;
         visibility: visible;
     }
 
@@ -65,7 +65,8 @@ body {
   }
 
 #gameInfo1 {
-  text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
     display: block;
     font-size: 5vh;
     color: black;
@@ -105,7 +106,7 @@ body {
   background-color:rgb(255, 255, 255);
   border: solid black 4px;
   z-index: 4;
-  padding: 30px;
+  padding: 2vh;
   visibility: hidden;
   display: flex;
   flex-direction: column;
@@ -120,7 +121,7 @@ body {
   left: 0;
   right: 0;
   margin: 2vh auto;
-  font-size: 40px;
+  font-size: 5vh;
 }
 
 #recap-answer {
@@ -130,19 +131,19 @@ body {
   left: 0;
   right: 0;
   margin: 0 auto;
-  font-size: 25px;
+  font-size: 4vh;
 }
 
 #recap-score {
   text-align: center;
   border: none;
   height: fit-content;
-  padding: 10px 30px;
+  padding: 1vh 3vh;
   left: 0;
   right: 0;
   margin: 4vh auto 2vh;
   font-family: "Montserrat", sans-serif;
-  font-size: 30px;
+  font-size: 5vh;
   font-weight: bold;
   background-color: black;
   color: white;
@@ -157,7 +158,8 @@ body {
 }
 
 #recap-table td {
-  padding: 3px;
+  padding: 0.5vh;
+  font-size: 2vh;
   text-align: center;
 }
 
@@ -175,7 +177,7 @@ body {
         justify-content: flex-start;
         background-color:rgba(255, 255, 255, 0.801);
         height: fit-content;
-        padding: 10px;
+        padding: 1vh;
         visibility: visible;
     }
 
@@ -199,29 +201,28 @@ h4 {
 
 
 .btn {
-        width: 250px;
-        height: 40px;
-        border: black 3px solid;
+        width: 20vw;
+        height: 6vh;
+        border: black 0.5vh solid;
         color: black;
         background-color: white;
-        font-size: 15px;
+        font-size: 2vh;
         font-family: "Montserrat", sans-serif;
 }
 
 /* RESULTS PAGE*/
 
-#top10 {
-  margin-top: 5vh;
-}
-
 #result-container {
-  width: 100%;
+  box-sizing: border-box;
+  margin: 10vh auto;
+  width: 80vw;
   height: 80vh;
+  padding: 8vh 5vh;
+  border: solid black 3vh;
   align-items: center;
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
-  padding-top: 15vh;
 }
 
 #result-text {
@@ -231,12 +232,12 @@ h4 {
   right: 0;
   margin: 0 auto;
   font-family: 'Parisienne', cursive;
-  font-size: 30px;
+  font-size: 5vh;
 }
 
 #result-container > p:nth-child(2) {
-  font-size: 50px;
-  margin: 3vh auto 3vh;
+  font-size: 5vh;
+  margin: 2vh auto 2vh;
   font-family: 'Parisienne', cursive;
   font-weight: bold;
 }
@@ -245,12 +246,12 @@ h4 {
   text-align: center;
   border: none;
   height: fit-content;
-  padding: 10px 30px;
+  padding: 1vh 3vh;
   left: 0;
   right: 0;
-  margin: 3vh auto 3vh;
+  margin: 2vh auto 2vh;
   font-family: "Montserrat", sans-serif;
-  font-size: 30px;
+  font-size: 6vh;
   font-weight: bold;
   background-color: black;
   color: white;
@@ -258,16 +259,22 @@ h4 {
 }
 
 #table-result {
-  width: 30vw;
+  width: 40vw;
   text-align: center;
   font-family: "Montserrat Light", sans-serif;
-  margin-bottom: 5vh;
+  margin-bottom: 4vh;
 }
 
-.#table-result td {
-  padding: 3px;
+#table-result td {
+  padding: 0.5vh;
+  font-size: 2vh;
 }
 
+
+#top-ten {
+  height: 6vh;
+  font-size: 3vh;
+}
 
 /* GAME INTROS*/
 
@@ -305,48 +312,9 @@ h4 {
   right: 0;
   margin: 5vh auto 7vh;
   font-family: 'Parisienne', cursive;
-  font-size: 30px;
+  font-size: 4vh;
 }
  
-
-
-/*
-
-#intro-container {
-        position: absolute;
-        width: 50vw;
-        height: fit-content;
-        margin: auto 20%;
-        border-left: solid 2px;
-        padding-left: 2%;  
-        top: 0;
-        bottom: 0;
-        left:0;
-        right:0;
-}
-
-
-#intro-title {
-        font-family:Arial, Helvetica, sans-serif;
-        font-style: italic;
-        font-weight: bold;
-        font-size: 70px;
-}
-
-
-.intro-text {
-        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-        font-size: 30px;
-}
-
-#highlighted-text {
-        color:blue;
-        font-weight: 500;
-
-}
-
-*/
-
 
 
 /* HOME 2 */
@@ -405,7 +373,7 @@ h4 {
   right: 0;
   margin: -6vh auto 5vh;
   font-family: 'Parisienne', cursive;
-  font-size: 30px;
+  font-size: 4vh;
 }
  
 
@@ -415,8 +383,8 @@ h4 {
   left: 0;
   right: 0;
   margin: 0 auto;
-  width: 60px;
-  height: 60px;
+  width: 6vh;
+  height: 6vh;
   z-index: 4;
   background: url("./Ressources/Home Page/play-button.png");
   background-size: cover;
@@ -447,8 +415,7 @@ h4 {
   height:60vh;
   left: 0;
   right: 0;
-  top:0;
-  bottom:0;
+  top:20vh;
   margin: auto;
   z-index: 2;
   overflow: hidden;
@@ -460,9 +427,9 @@ h4 {
 
 #pic-map {
   box-sizing: border-box;
-  max-width: 95%;
-  max-height: 95%;
-  border: 10px rgba(255, 255, 255, 0.801) solid;
+  max-width: 90%;
+  max-height: 90%;
+  border: 1vh rgba(255, 255, 255, 0.801) solid;
 }
 
 .pin-cursor {
@@ -572,10 +539,10 @@ h4 {
     display: block;
     text-align: center;
     font-size: 15vh;
-    width: 10px;
+    width: 1vh;
     color:black;
     background-color:rgba(255, 255, 255, 0.5);
-    border: 0px solid;
+    border: 0 solid;
     outline: none;
     font-weight: bold;
 }
@@ -804,7 +771,7 @@ span.intro {
     border-radius: 50%;
     font-size: 50px;
     text-decoration: black;
-    width: 50px;
+    width: 4vw;
     text-align: center;
     vertical-align: middle;
     position: absolute;

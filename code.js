@@ -43,7 +43,6 @@ gamePlan.push(loadResults);
 //Pour test unitaire
 // var gamePlan=[loadMapGame, nextMap]
 
-
 //LANCEMENT DU JEU
 
 nextPart("firstPart");   
@@ -77,21 +76,25 @@ function loadResults() {
         gameInfoDiv.style.position="fixed"
 
         //commentaires
-        if (Number(scoreElem.textContent)/maxScore < 0.5) {
-            document.getElementById("result-text").innerHTML="Seriously ?!"
+        if (Number(scoreElem.textContent)/maxScore < 0.1) {
+            document.getElementById("result-text").innerHTML="Have you done your best ?"
             document.getElementById("result-container").querySelectorAll("p")[1].innerHTML="The only Paris you deserve is <span class=\"red\">Paris Hilton</span>";
         }
+        else if (Number(scoreElem.textContent)/maxScore < 0.5) {
+            document.getElementById("result-text").innerHTML="Nice effort!"
+            document.getElementById("result-container").querySelectorAll("p")[1].innerHTML="Paris is still full of discoveries for you, <span class=\"red\">you lucky.</span>";
+        }
         else if (Number(scoreElem.textContent)/maxScore < 0.9) {
-            document.getElementById("result-text").innerHTML="Good job"
-            document.getElementById("result-container").querySelectorAll("p")[1].innerHTML="What about Paris Mayor ?";
+            document.getElementById("result-text").innerHTML="Good job!"
+            document.getElementById("result-container").querySelectorAll("p")[1].innerHTML="You're honoring Paris with your <span class=\"red\">love!</span> Would you give some more ?";
         }
         else {
-            document.getElementById("result-text").innerHTML="Impressive!"
-            document.getElementById("result-container").querySelectorAll("p")[1].innerHTML="You've just been reported to Anne Hidalgo";
+            document.getElementById("result-text").innerHTML="Impressive, bravo!"
+            document.getElementById("result-container").querySelectorAll("p")[1].innerHTML="Paris is lucky to have you, <span class=\"red\">thank you.!</span>";
         }
         
         //score
-        document.getElementById("total-score").innerHTML="total score: " + Number(scoreElem.textContent);
+        document.getElementById("total-score").innerHTML="total score: " + Number(scoreElem.textContent) + " pts";
 
         var resultTable=document.getElementById("table-result").querySelector("tbody");
 
@@ -390,7 +393,7 @@ function nextTitle(type) {
     inputAudio.setAttribute("editable", true)
 
     inputAudio.oninput = function() {
-        inputAudio.style.width=((inputAudio.value.length + 1) * 70) + 'px';
+        inputAudio.style.width=((inputAudio.value.length + 1) * 7) + 'vw';
         inputAudio.classList.remove("shake-horizontal")
         inputAudio.classList.remove("heartbeat")
     }
@@ -412,7 +415,7 @@ function nextTitle(type) {
 
                 inputAudio.classList.add("heartbeat")
                 inputAudio.value="";
-                inputAudio.style.width=((inputAudio.value.length + 1) * 70) + 'px';
+                inputAudio.style.width=((inputAudio.value.length + 1) * 7) + 'vw';
 
                 clearInterval(intervalID);
                 intervalID=0;
@@ -434,6 +437,7 @@ function nextTitle(type) {
                 clearInterval(intervalID);
                 intervalID=0;
                 inputAudio.value="";
+                inputAudio.style.width=((inputAudio.value.length + 1) * 7) + 'vw';
                 malus = updateScore("music", -0.5, timer)[2]
                 recap("music", 0, finalTime, [0, 0, malus, elapsed, penalties], audios[indexAudios].name)
             }
@@ -540,7 +544,7 @@ function gameIntro(type) {
 
 // HOME PAGE 2
 function loadHomePage2() {
-
+    
     //chargement du html
     axios
       .get('./home2.html')
