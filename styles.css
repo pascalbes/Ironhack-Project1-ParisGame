@@ -391,7 +391,7 @@ h4 {
 @import url("https://fonts.googleapis.com/css?family=Montserrat:900");
  .wrapper {
 	 animation: sliding-background 40s linear infinite;
-	 background: "./Ressources/Home Page/i4.JPG" no-repeat left / 120%;
+	 background: url("./Ressources/Home Page/i4.jpg") no-repeat left / 120%;
 	 height: 60vh;
 	 text-align: center;
 	 width: 100%;
