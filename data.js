@@ -82,7 +82,7 @@ var locations=[loc1, loc2, loc3, loc4, loc5, loc6, loc7, loc8, loc9, loc10, loc1
 
 //pour la présentation
 
-locations=[loc17, loc13, loc3, loc11]
+//locations=[loc17, loc13, loc3, loc11]
 
 var indexMap = 0;
 var locPushed=[];
@@ -137,7 +137,7 @@ const pic11 = new Picture(["./Ressources/2- Pics/i141-mars.jpg", "./Ressources/2
 
 const pic12 = new Picture(["./Ressources/2- Pics/i151-par.jpg", "./Ressources/2- Pics/i152-lon.jpg", "./Ressources/2- Pics/i153-banksy.jpg", "./Ressources/2- Pics/i154ny.jpg"],1,"find parisian piece of street art", ["Paris XIII", "London", "Palestine", "NY"])
 
-const pic13 = new Picture(["./Ressources/2- Pics/i62-kremlin.jpg", "./Ressources/2- Pics/i61-elysee.jpg", "./Ressources/2- Pics/i63-maisonblanche.jpg", "./Ressources/2- Pics/i64-deathstar.jpeg"],2,"where does french emperor live ?", ["Moscow", "Washington", "Paris Elysée", "Death Star"])
+const pic13 = new Picture(["./Ressources/2- Pics/i62-kremlin.jpg", "./Ressources/2- Pics/i61-elysee.jpg", "./Ressources/2- Pics/i63-maisonblanche.jpg", "./Ressources/2- Pics/i64-deathstar.jpeg"],2,"where does french emperor live ?", ["Moscow", "Paris Elysée","Washington", "Death Star"])
 
 const pic14 = new Picture(["./Ressources/2- Pics/i71-parma.jpg", "./Ressources/2- Pics/i72-paris.jpg", "./Ressources/2- Pics/I73-bay.jpg", "./Ressources/2- Pics/i74-bellota.jpg"],2,"find parisian ham", ["Parma", "Paris", "Bayonne", "Bellota"])
 
@@ -152,7 +152,7 @@ const pic18 = new Picture(["./Ressources/2- Pics", "./Ressources/2- Pics", "./Re
 var pictures=[pic1,pic2,pic3,pic4,pic5,pic6,pic7,pic8,pic9,pic10,pic11,pic12,pic13,pic14,pic15,pic16]
 
 //pour la présentation
-pictures=[pic14, pic13, pic5, pic3]
+//pictures=[pic14, pic13, pic5, pic3]
 
 class Audio {
     constructor(filename, expected, toDo, name) {
@@ -208,7 +208,7 @@ const audio22 = new Audio("./Ressources/Music/Cut/bigaranx-paris-is-a-bitch-ridd
 var audios=[audio1,audio2,audio3,audio4,audio5,audio6,audio7,audio8,audio9, audio10,audio11,audio12,audio13,audio14,audio15,audio16,audio17,audio18, audio19, audio20, audio21, audio22];
 
 //pour la présentation
-var audios=[audio21, audio6, audio7, audio12];
+//var audios=[audio21, audio6, audio7, audio12];
 
 var audioPlayed=[];
 var indexAudios = 0;
@@ -227,28 +227,28 @@ for (i=1;i<=13;i++) {
 //renvoi un entier random compris entre min et max
 function randomEasy(min,max) {
     //Presentation mode
-    return min
+    //return min
 
     //Running verion : 
-    //return min + Math.round(Math.random()*(max-min))
+    return min + Math.round(Math.random()*(max-min))
 }
 
 //renvoi un entier random compris entre min et max et non inclus dans le tableau arr
 function randomNew(min,max, arr) {
 
     //Presentation mode
-    for (let i=min ; i<=max;i++) {
-        if (!arr.includes(i)) {
-            return i
-        }
-    }
+    // for (let i=min ; i<=max;i++) {
+    //     if (!arr.includes(i)) {
+    //         return i
+    //     }
+    // }
 
     //Running verion : 
-    // let elem = randomEasy(min, max)
-    // while (arr.includes(elem)) {
-    //     elem = randomEasy(min, max)
-    // }
-    // return elem
+    let elem = randomEasy(min, max)
+    while (arr.includes(elem)) {
+        elem = randomEasy(min, max)
+    }
+    return elem
 }
 
 
