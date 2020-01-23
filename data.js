@@ -99,10 +99,7 @@ class Picture {
         var picsElements=document.getElementsByClassName("pics-element")
 
         for(let i=0;i<4;i++) {
-            picsElements[i].classList.remove("flip-in-ver-left");
             picsElements[i].src=this.files[i]
-            picsElements[i].classList.add("flip-in-ver-left");
-            console.log(picsElements[i])
         }
     }
 
@@ -171,7 +168,6 @@ class Audio {
 
     stopMusic() {
         let audioElem=document.getElementById("audio");
-        console.log("yes")
         audioElem.pause();
     }
 }
@@ -276,7 +272,6 @@ function updateScore(type,result,t) {
         nbScoresArr[4]++
     }
     else if (type==="music" && result===-0.5) { //cas entrée nok
-        console.log("bad")
         bad = -500;
     }
 
@@ -309,8 +304,6 @@ function updateScore(type,result,t) {
     bad!==0 ? nbScoresArr[2]++ : 1
     elapsed!==0 ? nbScoresArr[3]++ : 1
 
-    console.log([score, bonus, bad, elapsed, penalties])
-
     return [score, bonus, bad, elapsed, penalties]
 }
 
@@ -326,8 +319,6 @@ function recap(typeGame, typeResult, time, [score, bonus, bad, elapsed, penaltie
     scoresArr[4] += penalties
 
     totalScore = score+bonus+bad+elapsed+penalties;
-
-    console.log(scoresArr, nbScoresArr)
 
     //arrêt de l'audio en cours
     if (typeGame==="music") {
@@ -370,15 +361,23 @@ function recap(typeGame, typeResult, time, [score, bonus, bad, elapsed, penaltie
 
     //bonne ou mauvaise réponse
     if (bonus >0) {
-        var mapInfo = ""
-        if (typeGame==="map") {
-            mapInfo = "<br>" + "You are " + typeResult + " meters away";
-        }
-        document.getElementById("recap-text").innerHTML="Well done !" + mapInfo
+        document.getElementById("recap-text").innerHTML="Well done!"
     }
     else {
         document.getElementById("recap-text").innerHTML="Too bad!"
     }
+
+    //Réponse
+    if (typeGame==="music") {
+        document.getElementById("recap-answer").innerHTML="Expected answer was:<br>\"" + elemClicked + "\""
+    }
+    else if (typeGame==="pics") {
+        document.getElementById("recap-answer").innerHTML="The picture you selected is:<br>\"" + elemClicked + "\""
+    }
+    else if (typeGame==="map") {
+        document.getElementById("recap-answer").innerHTML="You are " + typeResult + " meters away";
+    }
+
 
     //Score total
     document.getElementById("recap-score").innerHTML=totalScore + " pts"

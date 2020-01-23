@@ -2,9 +2,9 @@
 
 //Définition des paramêtres principaux du jeu
 
-var nbAudios = 2 //nombre d'audios proposés
-var nbPics = 2 //nombre d'images proposées
-var nbMaps = 18 //nombre de maps proposées
+var nbAudios = 4 //nombre d'audios proposés
+var nbPics = 4 //nombre d'images proposées
+var nbMaps = 4 //nombre de maps proposées
 
 var maxScore=(nbAudios+nbPics+nbMaps)*7000;
 
@@ -44,9 +44,6 @@ gamePlan.push(loadResults);
 // var gamePlan=[loadMapGame, nextMap]
 
 
-console.log(gamePlan);
-
-
 //LANCEMENT DU JEU
 
 nextPart("firstPart");   
@@ -78,8 +75,6 @@ function loadResults() {
         titlesDiv.style.visibility="hidden"
         gameInfoDiv.style.visibility="hidden"
         gameInfoDiv.style.position="fixed"
-
-        console.log(totalScore, Number(scoreElem.textContent), maxScore)
 
         //commentaires
         if (Number(scoreElem.textContent)/maxScore < 0.5) {
@@ -118,8 +113,6 @@ function loadResults() {
             td3.innerHTML=scoreItem + " pts"
             tr.appendChild(td3)
         }
-
-        console.log(titlesArr, nbScoresArr,scoresArr)
 
         scoresArr.forEach((v,i) => {
             addLine3(titlesArr[i], nbScoresArr[i],scoresArr[i])
@@ -349,8 +342,6 @@ function loadPicGame() {
 //MUSIC GAME
 function nextTitle(type) {
 
-    console.log("next title-----------------")
-
     timer=0;
     var score = 0;
     var bonus = 0;
@@ -409,8 +400,6 @@ function nextTitle(type) {
     //gestion des entrées
     inputAudio.onchange = function() {
 
-        console.log("input value",inputAudio.value)
-
         if (audios[indexAudios].isTheGoodOne(inputAudio.value)) {//entrée ok !
 
             var finalTime= timer;
@@ -439,8 +428,6 @@ function nextTitle(type) {
             }
         }
         else {//entrée nok !
-
-            console.log("entrée nok")
 
             //volonté de skipper ?
             if (inputAudio.value === "pass") {
