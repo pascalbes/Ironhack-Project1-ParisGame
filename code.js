@@ -45,6 +45,22 @@ gamePlan.push(loadResults);
 
 //LANCEMENT DU JEU
 
+//about
+var aboutBtn=document.getElementById("about-button");
+var aboutDiv=document.getElementById("about");
+
+
+aboutBtn.onclick = function() {
+    aboutDiv.style.visibility="visible"
+
+    var aboutClose=document.getElementById("close-about");
+    aboutClose.onclick = function() {
+        aboutDiv.style.visibility="hidden"
+    }
+    
+}
+
+
 nextPart("firstPart");   
 
 function nextPart(type) {
@@ -121,6 +137,11 @@ function loadResults() {
             addLine3(titlesArr[i], nbScoresArr[i],scoresArr[i])
         });
 
+        var playBtn=document.getElementById("replay");
+        playBtn.onclick = function() {
+            location = location
+        }
+        
     });
 
 }
@@ -390,7 +411,8 @@ function nextTitle(type) {
 
     //gestion de l'input
     var inputAudio=document.getElementById("music-input");
-    inputAudio.setAttribute("editable", true)
+    inputAudio.setAttribute("editable", true);
+    inputAudio.value="";
 
     inputAudio.oninput = function() {
         inputAudio.style.width=((inputAudio.value.length + 1) * 7) + 'vw';
@@ -571,6 +593,9 @@ function loadHomePage2() {
             containerElem.innerHTML = "";
             nextPart();
         }
+
+
+
 
     }); 
 

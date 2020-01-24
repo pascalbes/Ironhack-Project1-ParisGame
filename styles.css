@@ -10,6 +10,9 @@ body {
     overflow-x: hidden;
 }
 
+
+
+
 #container {
     width: 100%;
     height: 100%;
@@ -40,6 +43,84 @@ body {
   color: #DB5461;
   font-weight: bold;
 }
+
+/* ABOUT */
+
+#about-button span {
+  font-style: italic;
+  font-size: 3vh;
+  border-bottom:solid 3px #DB5461;
+}
+
+#about-button {
+  position: absolute;
+  bottom: 2vh;
+  right: 2vw;
+  background-color:rgba(255, 255, 255, 0.801);
+  padding:0vh 1.5vh 1vh 1vh;
+}
+
+#about {
+  position: fixed;
+  top:0;
+  left:0;
+  box-sizing: border-box;
+  margin: 12vh 20vw;
+  height: 76vh;
+  width: 60vw;
+  padding: 8vh 5vh;
+  border: solid black 3vh;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background: white;
+  z-index: 5;
+}
+
+#about :nth-child(1), #about :nth-child(4), #about :nth-child(6), #about :nth-child(8) {
+  font-size: 4vh;
+  text-align: center;
+  border: none;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  font-family: 'Parisienne', cursive;
+  font-weight: bold;
+}
+
+#about :nth-child(3), #about :nth-child(5), #about :nth-child(7), #about :nth-child(9), #about a {
+  font-size: 2vh;
+  text-align: center;
+  margin: 0.5vh auto 1.5vh;
+  font-family: "Montserrat Light", sans-serif;
+  font-weight: bold;
+}
+
+#about :nth-child(3) {
+  margin-top: 0;
+}
+
+#about :nth-child(9) {
+  margin-bottom: 0;
+}
+
+#about a {
+  display: inline;
+  margin: 0;
+  color: black;
+  text-decoration: none;
+  text-decoration: underline black;
+}
+
+#about a:visited {
+  color: black;
+}
+
+#close-about {
+  margin-top: 5vh;
+}
+
 
 /* GENERAL / GAME INFOS */
 
@@ -96,7 +177,7 @@ body {
 /*GENERAL - RECAP */
 
 #recap {
-  position: absolute;
+  position: fixed;
   width:fit-content;
   left: 0;
   right: 0;
@@ -231,7 +312,7 @@ h4 {
   left: 0;
   right: 0;
   margin: 0 auto;
-  font-family: 'Parisienne', cursive;
+  font-family: "Montserrat", sans-serif;
   font-size: 5vh;
 }
 
@@ -396,17 +477,19 @@ h4 {
 
 #image-div {
   position: relative;
-  width: 100%;
-  height: fit-content;
-  align-items: left;
-  display: flex;
-  background: black;
-  object-fit: cover;
+  background: url("./Ressources/Plan Paris/shutterstock_511329829 - cut.jpg");
+  background-size: cover;
+  min-width: 100%;
+  height: 100%;
 }
 
+
+
 #map-image {
-  max-width: 100%;
+  min-width: 100vw;
+  height: auto;
 }
+
 
 #pic-element {
   position: fixed;
@@ -415,7 +498,7 @@ h4 {
   height:60vh;
   left: 0;
   right: 0;
-  top:20vh;
+  top:25vh;
   margin: auto;
   z-index: 2;
   overflow: hidden;
@@ -780,15 +863,6 @@ span.intro {
   }
 
 
-
-/* VIDEO INTRO */
-#video-intro {
-    position: fixed;
-    left: 0;
-    top: 0;
-    min-width: 100%;
-    min-height: 100%;
-  }
 
 
   /* Key Frames */

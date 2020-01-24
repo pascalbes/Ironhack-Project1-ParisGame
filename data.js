@@ -35,12 +35,11 @@ class Location {
 
     loadPic() {
 
-        var picDiv=document.querySelector("#pic-element");
-        picDiv.style.visibility="visible";
-
-
         var picMap=document.querySelector("#pic-map")
         picMap.src=this.file
+        
+        var picDiv=document.querySelector("#pic-element");
+        picDiv.style.visibility="visible";
 
         setTimeout(function() {
             picDiv.style.visibility="hidden";
@@ -123,7 +122,7 @@ const pic4 = new Picture(["./Ressources/2- Pics/i41.jpg", "./Ressources/2- Pics/
 
 const pic5 = new Picture(["./Ressources/2- Pics/i51-chirac1997.jpg", "./Ressources/2- Pics/i52-1974.jpg", "./Ressources/2- Pics/i53-chirac2002.jpg", "./Ressources/2- Pics/i54-1978.jpg"],4,"find Jacques when he was mayor of Paris", ["Chirac in 1997", "Chirac in 1974", "Chirac in 2002", "Chirac in 1978, Maire de Paris"])
 
-const pic6 = new Picture(["./Ressources/2- Pics/i161-par.jpg", "./Ressources/2- Pics/i162american-revolution.jpg", "./Ressources/2- Pics/i164-italian.jpg", "./Ressources/2- Pics/i163-english.png"],1,"find parisian revolution", ["Revolution of 1830 in Paris", "American revolution", "English revolution", "Italian revolution"])
+const pic6 = new Picture(["./Ressources/2- Pics/i161-par.jpg", "./Ressources/2- Pics/i162american-revolution.jpg", "./Ressources/2- Pics/i164-italian.jpg", "./Ressources/2- Pics/i163english.jpg"],1,"find parisian revolution", ["Revolution of 1830 in Paris", "American revolution", "English revolution", "Italian revolution"])
 
 const pic7 = new Picture(["./Ressources/2- Pics/i101Starry-Night-by-Vincent-Van-Gogh-painting-ny.jpg", "./Ressources/2- Pics/i102Turner-blue_rigi_sunrise_tate_t12336_9.jpg", "./Ressources/2- Pics/i103millet.jpg", "./Ressources/2- Pics/i104Guernica-by-Picasso-painting.jpg"],3,"find the painting exhibited in Paris", ["Van Gogh / New York", "Turner / London", "L'angélus de Millet / Paris Orsay", "Picasso Guernica / Madrid"])
 
