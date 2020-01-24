@@ -37,6 +37,10 @@ class Location {
 
         var picMap=document.querySelector("#pic-map")
         picMap.src=this.file
+
+    }
+
+    displayPic() {
         
         var picDiv=document.querySelector("#pic-element");
         picDiv.style.visibility="visible";
@@ -44,6 +48,13 @@ class Location {
         setTimeout(function() {
             picDiv.style.visibility="hidden";
         },2000)
+
+    }
+
+    hidePic() {
+        
+        var picDiv=document.querySelector("#pic-element");
+        picDiv.style.visibility="hidden";
 
     }
 
@@ -193,7 +204,7 @@ const audio9 = new Audio("./Ressources/Music/Cut/paris-seveille.mp3", ["dutronc"
 const audio10 = new Audio("./Ressources/Music/Cut/oh-ville-lumiere.mp3", ["parc des princes"], "what place are we ?", "Parc des Princes - Oh ville lumière")
 const audio11 = new Audio("./Ressources/Music/Cut/paris-austerlitz.mp3", ["gare d'austerlitz", "austerlitz"], "in which train station are we ?", "Gare d'Austerlitz")
 const audio12 = new Audio("./Ressources/Music/Cut/antoine-kombouare.mp3", ["madrid", "real", "real madrid"], "who is PSG opponent ?", "Real Madrid - 1993")
-const audio13 = new Audio("./Ressources/Music/Cut/bill-evans-april-in-paris.mp3",["bill evans", "april in paris"], "find the pianist or the song", "Bill Evans - April in Paris");
+const audio13 = new Audio("./Ressources/Music/Cut/mxms-paris.mp3",["mxms", "paris"], "find the artist or the song", "MXMS - Paris");
 const audio14 = new Audio("./Ressources/Music/Cut/ligne-4.mp3", ["barbes", "barbès", "barbes rochechouart", "barbès rochechouart", "barbès-rochechouart", "barbes-rochechouart"], "what is next metro station ?", "Barbes Rochechouart")
 const audio15 = new Audio("./Ressources/Music/Cut/midnight-in-paris-rain-scene.mp3",["midnight in paris"], "what movie the scene is from ?", "Midnight in Paris - Ending Scene")
 const audio16 = new Audio("./Ressources/Music/Cut/roy-hargrove-quintet-strasbourg-st-denis.mp3", ["roy hargrove", "strasbourg st denis", "strasbourg-st-denis", "strasbourg st-denis"], "find the artist or the song", "Roy Hargrove - Strasbourg St-Denis");
@@ -214,7 +225,7 @@ var indexAudios = 0;
 
 //Tableau de photos pour la gallerie du Music Game
 const pics=[];
-for (i=1;i<=13;i++) {
+for (i=1;i<=11;i++) {
     pics.push("./Ressources/Music/Pics/i" + i + ".jpg")
 }
 

@@ -200,14 +200,11 @@ function nextMap(type) {
         //création de l'index audio, valeur random
         indexMap = randomEasy(0, locations.length-1)
         locPushed.push(indexMap)
-    }
-    else {
-        indexMap=randomNew(0,locations.length-1,locPushed);
-        locPushed.push(indexMap)
+        locations[indexMap].loadPic();
     }
 
     //affichage photo
-    locations[indexMap].loadPic();
+    locations[indexMap].displayPic();
 
     //lancement chrono / après la photo
     var intervalID = setInterval(() => {
@@ -229,6 +226,8 @@ function nextMap(type) {
 
     mapElement.onclick = function(event) {
 
+        locations[indexMap].hidePic();
+
         var xPos=(event.x-event.srcElement.offsetLeft+window.scrollX)/event.srcElement.width;
         var yPos=(event.y-event.srcElement.offsetTop+window.scrollY)/event.srcElement.height;
 
@@ -236,13 +235,18 @@ function nextMap(type) {
         //console.log(xPos, yPos)
 
         var distance = Math.floor(locations[indexMap].isTheGoodOne(xPos,yPos));
-        var finalTime=timer,
+        var finalTime=timer;
 
         arr=updateScore("map",distance,finalTime)
         clearInterval(intervalID);
         intervalID=0;
 
         recap("map", distance, finalTime, [arr[0], arr[1], arr[2], 0, 0], locations[indexMap].name)
+
+        //chargement de la photo suivante en amont
+        indexMap=randomNew(0,locations.length-1,locPushed);
+        locations[indexMap].loadPic();
+        locPushed.push(indexMap)
 
     }
 
