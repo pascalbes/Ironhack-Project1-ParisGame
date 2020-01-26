@@ -92,7 +92,7 @@ var locations=[loc1, loc2, loc3, loc4, loc5, loc6, loc7, loc8, loc9, loc10, loc1
 
 //pour la présentation
 
-locations=[loc17, loc3, loc11];
+locations=[loc17, loc15, loc11];
 
 var indexMap = 0;
 var locPushed=[];
