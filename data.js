@@ -92,7 +92,7 @@ var locations=[loc1, loc2, loc3, loc4, loc5, loc6, loc7, loc8, loc9, loc10, loc1
 
 //pour la présentation
 
-//locations=[loc17, loc13, loc3, loc11]
+locations=[loc17, loc3, loc11];
 
 var indexMap = 0;
 var locPushed=[];
@@ -124,45 +124,28 @@ class Picture {
 }
 
 const pic1 = new Picture(["./Ressources/2- Pics/i11.jpg", "./Ressources/2- Pics/i12.jpg", "./Ressources/2- Pics/i13.jpg", "./Ressources/2- Pics/i14.jpg"],3,"find the parisian park", ["Hyde Park", "Central Park", "Bois de Vincennes", "Villa Borghese"])
-
 const pic2 = new Picture(["./Ressources/2- Pics/i21.jpg", "./Ressources/2- Pics/i22.jpg", "./Ressources/2- Pics/i23.jpg", "./Ressources/2- Pics/i24.jpg"],2,"find the parisian stadium", ["Stade Vélodrome / Marseille", "Parc des Princes / Paris", "Stade de France / Saint-Denis", "Maracana / Rio de Janeiro"])
-
 const pic3 = new Picture(["./Ressources/2- Pics/i31.jpg", "./Ressources/2- Pics/i32.jpg", "./Ressources/2- Pics/i33.jpg", "./Ressources/2- Pics/i34.jpg"],1,"find Mondrian Place de la Concorde", ["Place de la Concorde", "New York City", "Trafalgar Square", "Composition II en rouge, bleu et jaune"])
-
 const pic4 = new Picture(["./Ressources/2- Pics/i41.jpg", "./Ressources/2- Pics/i42.jpg", "./Ressources/2- Pics/i43.jpg", "./Ressources/2- Pics/i44-roma.jpg"],1,"find the parisian one", ["Seine", "Tames", "Saône & Rhône", "Tiber"])
-
 const pic5 = new Picture(["./Ressources/2- Pics/i51-chirac1997.jpg", "./Ressources/2- Pics/i52-1974.jpg", "./Ressources/2- Pics/i53-chirac2002.jpg", "./Ressources/2- Pics/i54-1978.jpg"],4,"find Jacques when he was mayor of Paris", ["Chirac in 1997", "Chirac in 1974", "Chirac in 2002", "Chirac in 1978, Maire de Paris"])
-
 const pic6 = new Picture(["./Ressources/2- Pics/i161-par.jpg", "./Ressources/2- Pics/i162american-revolution.jpg", "./Ressources/2- Pics/i164-italian.jpg", "./Ressources/2- Pics/i163english.jpg"],1,"find parisian revolution", ["Revolution of 1830 in Paris", "American revolution", "English revolution", "Italian revolution"])
-
 const pic7 = new Picture(["./Ressources/2- Pics/i101Starry-Night-by-Vincent-Van-Gogh-painting-ny.jpg", "./Ressources/2- Pics/i102Turner-blue_rigi_sunrise_tate_t12336_9.jpg", "./Ressources/2- Pics/i103millet.jpg", "./Ressources/2- Pics/i104Guernica-by-Picasso-painting.jpg"],3,"find the painting exhibited in Paris", ["Van Gogh / New York", "Turner / London", "L'angélus de Millet / Paris Orsay", "Picasso Guernica / Madrid"])
-
 const pic8 = new Picture(["./Ressources/2- Pics/i111Paris-Las-Vegas.jpg", "./Ressources/2- Pics/i112tok.jpg", "./Ressources/2- Pics/i113par.jpg", "./Ressources/2- Pics/i114pra.jpg"],3,"find the one and only Tour Eiffel", ["Las Vegas", "Tokyo", "Paris", "Prague"])
-
 const pic9 = new Picture(["./Ressources/2- Pics/i121-rom.jpg", "./Ressources/2- Pics/i122ber.jpg", "./Ressources/2- Pics/i123-par.jpg", "./Ressources/2- Pics/i124mos.jpg"],3,"find Paris Triumphal Arch", ["Roma", "Berlin", "Paris", "Moscow"])
-
 const pic10 = new Picture(["./Ressources/2- Pics/i131par.jpg", "./Ressources/2- Pics/i133syd.jpg", "./Ressources/2- Pics/i134metopera1.jpg", "./Ressources/2- Pics/i13éwien.jpg"],1,"find the parisian opera", ["Paris", "Sydney", "NY", "Wien"])
-
 const pic11 = new Picture(["./Ressources/2- Pics/i141-mars.jpg", "./Ressources/2- Pics/i142velovly.jpg", "./Ressources/2- Pics/i143gre.jpg", "./Ressources/2- Pics/i144.jpg"],4,"find Paris city bike", ["Marseille", "Lyon", "Grenoble", "Paris"])
-
 const pic12 = new Picture(["./Ressources/2- Pics/i151-par.jpg", "./Ressources/2- Pics/i152-lon.jpg", "./Ressources/2- Pics/i153-banksy.jpg", "./Ressources/2- Pics/i154ny.jpg"],1,"find parisian piece of street art", ["Paris XIII", "London", "Palestine", "NY"])
-
-const pic13 = new Picture(["./Ressources/2- Pics/i62-kremlin.jpg", "./Ressources/2- Pics/i61-elysee.jpg", "./Ressources/2- Pics/i63-maisonblanche.jpg", "./Ressources/2- Pics/i64-deathstar.jpeg"],2,"where does french emperor live ?", ["Moscow", "Paris Elysée","Washington", "Death Star"])
-
+const pic13 = new Picture(["./Ressources/2- Pics/i62-kremlin.jpg", "./Ressources/2- Pics/i61-elysee.jpg", "./Ressources/2- Pics/i63-maisonblanche.jpg", "./Ressources/2- Pics/i64-deathstar.jpeg"],2,"where does french president live ?", ["Moscow", "Paris Elysée","Washington", "Death Star"])
 const pic14 = new Picture(["./Ressources/2- Pics/i71-parma.jpg", "./Ressources/2- Pics/i72-paris.jpg", "./Ressources/2- Pics/I73-bay.jpg", "./Ressources/2- Pics/i74-bellota.jpg"],2,"find parisian ham", ["Parma", "Paris", "Bayonne", "Bellota"])
-
 const pic15 = new Picture(["./Ressources/2- Pics/i81-paris.jpg", "./Ressources/2- Pics/i82-girolle.jpg", "./Ressources/2- Pics/i83-amanite.jpg", "./Ressources/2- Pics/i84cèpes.jpg"],1,"find parisian mushroom", ["Champignons de Paris", "Girolles", "Amanites", "Cèpes"])
-
 const pic16 = new Picture(["./Ressources/2- Pics/i91.jpg", "./Ressources/2- Pics/i92.jpg", "./Ressources/2- Pics/i93mont.jpg", "./Ressources/2- Pics/i94roma.jpg"],3,"find parisian stairs", ["NY / Joker", "Lisboa", "Paris", "Roma"])
-
 const pic17 = new Picture(["./Ressources/2- Pics/", "./Ressources/2- Pics", "./Ressources/2- Pics", "./Ressources/2- Pics"],4,"find ", ["", "", "", ""])
-
 const pic18 = new Picture(["./Ressources/2- Pics", "./Ressources/2- Pics", "./Ressources/2- Pics", "./Ressources/2- Pics"],4,"find ", ["", "", "", ""])
 
 var pictures=[pic1,pic2,pic3,pic4,pic5,pic6,pic7,pic8,pic9,pic10,pic11,pic12,pic13,pic14,pic15,pic16]
 
 //pour la présentation
-//pictures=[pic14, pic13, pic5, pic3]
+pictures=[pic15, pic13, pic3]
 
 class Audio {
     constructor(filename, expected, toDo, name) {
@@ -218,7 +201,7 @@ const audio22 = new Audio("./Ressources/Music/Cut/bigaranx-paris-is-a-bitch-ridd
 var audios=[audio1,audio2,audio3,audio4,audio5,audio6,audio7,audio8,audio9, audio10,audio11,audio12,audio13,audio14,audio15,audio16,audio17,audio18, audio19, audio20, audio21, audio22];
 
 //pour la présentation
-//var audios=[audio21, audio6, audio7, audio12];
+var audios=[audio21, audio6, audio11];
 
 var audioPlayed=[];
 var indexAudios = 0;
@@ -237,28 +220,28 @@ for (i=1;i<=11;i++) {
 //renvoi un entier random compris entre min et max
 function randomEasy(min,max) {
     //Presentation mode
-    //return min
+    return min
 
     //Running verion : 
-    return min + Math.round(Math.random()*(max-min))
+    //return min + Math.round(Math.random()*(max-min))
 }
 
 //renvoi un entier random compris entre min et max et non inclus dans le tableau arr
 function randomNew(min,max, arr) {
 
     //Presentation mode
-    // for (let i=min ; i<=max;i++) {
-    //     if (!arr.includes(i)) {
-    //         return i
-    //     }
-    // }
+    for (let i=min ; i<=max;i++) {
+        if (!arr.includes(i)) {
+            return i
+        }
+    }
 
     //Running verion : 
-    let elem = randomEasy(min, max)
-    while (arr.includes(elem)) {
-        elem = randomEasy(min, max)
-    }
-    return elem
+    // let elem = randomEasy(min, max)
+    // while (arr.includes(elem)) {
+    //     elem = randomEasy(min, max)
+    // }
+    // return elem
 }
 
 

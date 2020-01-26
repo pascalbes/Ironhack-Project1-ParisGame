@@ -2,9 +2,9 @@
 
 //Définition des paramêtres principaux du jeu
 
-var nbAudios = 4 //nombre d'audios proposés
-var nbPics = 4 //nombre d'images proposées
-var nbMaps = 4 //nombre de maps proposées
+var nbAudios = 3 //nombre d'audios proposés
+var nbPics = 3 //nombre d'images proposées
+var nbMaps = 3 //nombre de maps proposées
 
 var maxScore=(nbAudios+nbPics+nbMaps)*7000;
 
@@ -16,12 +16,9 @@ var timer=0;
 
 var indexGamePlan=0;
 
-var gamePlan=[loadHomePage2, function() { gameIntro("Music")},loadMusicGame, function() { nextTitle('first') }];
+var gamePlan=[loadHomePage2];
 
-for (let i=2;i<=nbAudios;i++) {
-    gamePlan.push(nextTitle);
-}
-
+//pics game
 gamePlan.push(function() { gameIntro("Pics")})
 gamePlan.push(loadPicGame);
 gamePlan.push(function() { nextPic('first')});
@@ -30,6 +27,16 @@ for (let i=2;i<=nbPics;i++) {
     gamePlan.push(nextPic);
 }
 
+//audio game
+gamePlan.push(function() {gameIntro("Music")})
+gamePlan.push(loadMusicGame);
+gamePlan.push(function() {nextTitle('first')})
+
+for (let i=2;i<=nbAudios;i++) {
+    gamePlan.push(nextTitle);
+}
+
+//map game
 gamePlan.push(function() { gameIntro("Maps")});
 gamePlan.push(loadMapGame);
 gamePlan.push(function() { nextMap('first')});
@@ -389,10 +396,7 @@ function nextTitle(type) {
     }, 10);
 
     if (type==="first") { // premier titre lancé
-        //suppression bouton start
-        var startButton=document.getElementById("start-button");
-        startButton.remove();
-
+        
         gameInfoDiv.style.visibility="visible";
 
         //création de l'index audio, valeur random
