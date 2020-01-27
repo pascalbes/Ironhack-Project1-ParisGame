@@ -2,9 +2,9 @@
 
 //Définition des paramêtres principaux du jeu
 
-var nbAudios = 3 //nombre d'audios proposés
-var nbPics = 3 //nombre d'images proposées
-var nbMaps = 3 //nombre de maps proposées
+var nbAudios = 4 //nombre d'audios proposés
+var nbPics = 4 //nombre d'images proposées
+var nbMaps = 4 //nombre de maps proposées
 
 var maxScore=(nbAudios+nbPics+nbMaps)*7000;
 

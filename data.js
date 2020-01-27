@@ -92,7 +92,7 @@ var locations=[loc1, loc2, loc3, loc4, loc5, loc6, loc7, loc8, loc9, loc10, loc1
 
 //pour la présentation
 
-locations=[loc17, loc15, loc11];
+locations=[loc17, loc15, loc3, loc11];
 
 var indexMap = 0;
 var locPushed=[];
@@ -145,7 +145,7 @@ const pic18 = new Picture(["./Ressources/2- Pics", "./Ressources/2- Pics", "./Re
 var pictures=[pic1,pic2,pic3,pic4,pic5,pic6,pic7,pic8,pic9,pic10,pic11,pic12,pic13,pic14,pic15,pic16]
 
 //pour la présentation
-pictures=[pic15, pic13, pic3]
+pictures=[pic15, pic13, pic5, pic3]
 
 class Audio {
     constructor(filename, expected, toDo, name) {
@@ -201,7 +201,7 @@ const audio22 = new Audio("./Ressources/Music/Cut/bigaranx-paris-is-a-bitch-ridd
 var audios=[audio1,audio2,audio3,audio4,audio5,audio6,audio7,audio8,audio9, audio10,audio11,audio12,audio13,audio14,audio15,audio16,audio17,audio18, audio19, audio20, audio21, audio22];
 
 //pour la présentation
-var audios=[audio21, audio6, audio11];
+var audios=[audio21, audio6, audio15, audio11];
 
 var audioPlayed=[];
 var indexAudios = 0;
@@ -336,7 +336,7 @@ function recap(typeGame, typeResult, time, [score, bonus, bad, elapsed, penaltie
 
     totalScore = score+bonus+bad+elapsed+penalties;
 
-    //arrêt de l'audio en cours
+    //dans le cas du Music Game arrêt de l'audio en cours
     if (typeGame==="music") {
         audios[0].stopMusic();
         var inputAudio=document.getElementById("music-input");
@@ -361,20 +361,6 @@ function recap(typeGame, typeResult, time, [score, bonus, bad, elapsed, penaltie
         }
     });
 
-
-    //au clic : on cache la pop-up et on vide le tableau
-    btnNext.onclick = function() {
-
-        recapDiv.style.visibility="hidden";
-        var tableLines=document.getElementById("recap-table").querySelector("tbody").querySelectorAll("tr")
-
-        tableLines.forEach((tr) => {
-            tr.remove();
-        });
-
-        nextPart();
-    }
-
     //bonne ou mauvaise réponse
     if (bonus >0) {
         document.getElementById("recap-text").innerHTML="Well done!"
@@ -394,12 +380,13 @@ function recap(typeGame, typeResult, time, [score, bonus, bad, elapsed, penaltie
         document.getElementById("recap-answer").innerHTML="You are " + typeResult + " meters away";
     }
 
-
     //Score total
     document.getElementById("recap-score").innerHTML=totalScore + " pts"
 
+    /////Remplissage du tableau
     var recapTable=document.getElementById("recap-table").querySelector("tbody")
 
+    //fonction addLine2 (2 pour le nombre de colonnes)
     function addLine2(titreItem, scoreItem) {
 
         var tr = document.createElement("tr")
@@ -414,16 +401,10 @@ function recap(typeGame, typeResult, time, [score, bonus, bad, elapsed, penaltie
 
     //update du tableau
     if (score>0) {
-
-        //good answer
         addLine2("Good Answer", score)
-
-        //bonus time
         addLine2("Bonus time", bonus)
-
     }
     else if (bad<0) {
-        //bad answer
         addLine2("Bad Answer", bad)
     }
     else if (elapsed<0) {
@@ -434,6 +415,18 @@ function recap(typeGame, typeResult, time, [score, bonus, bad, elapsed, penaltie
     }
 
         
+    //au clic du bouton next : on cache la pop-up, on vide le tableau et on passe à la suite
+    btnNext.onclick = function() {
+
+        recapDiv.style.visibility="hidden";
+        var tableLines=document.getElementById("recap-table").querySelector("tbody").querySelectorAll("tr")
+
+        tableLines.forEach((tr) => {
+            tr.remove();
+        });
+
+        nextPart();
+    }
 
     // //affichage pr le map
     // if (typeGame==="map") {
